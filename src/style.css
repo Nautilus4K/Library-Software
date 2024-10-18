@@ -1,0 +1,79 @@
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.centered {
+    text-align: center;
+}
+
+.cam_container {
+    align-items: center;
+    text-align: center;
+}
+
+.cam {
+    border-radius: 20px;
+}
+
+.book_img {
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px;
+}
+
+.books_subheader {
+    padding: 20px;
+    background-color: rgb(65, 65, 65);
+    box-shadow: 5px 5px 20px black;
+    border-radius: 22px; /* 22px vi da co padding 20px ben tren nen se dc coi la (22-20)px */
+    color: white;
+    transition: padding 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    size: 20px;
+}
+
+.books_subheader:hover {
+    padding: 30px;
+    background-color: black;
+}
+.centered_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+/* Nav bar */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* background-color: #33333300; */
+    display: flex;
+    position: fixed;
+    /* justify-content: space-evenly; */
+    /* float: right; */
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 18px 20px;
+    text-decoration: none;
+    background-color: #33333391;
+    border-radius: 10px;
+    transition: 0.3s;
+  }
+  
+  /* Doi mau sang black */
+  li a:hover {
+    background-color: #111;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Thư viện Trường Trung Học Cơ Sở Đoàn Thị Điểm</title>
+        <link rel="stylesheet" type="text/css" href="src/style.css">
+        <script src="src/qrLoader.js" defer="defer"></script>
+
+        <!-- Them thu vien doc QR jsQR -->
+        <script src="src/jsQR.js"></script>
+        <!-- <script src="/src/qrLoader.js"></script> -->
+    </head>
+    <body>
+        <div id="nav">
+            <br><br>
+            <ul>
+                <!-- Them ko gian nhin cho no dep -->
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <li><a href="/">🏠</a></li>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <li><a>🔍</a></li>
+
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <!-- Tren phia con lai cua man hinh -->
+                <li style="float: right;"><a href="about.html">🧾 Về chúng tôi</a></li>
+            </ul>
+        </div>
+
+        <br><br>
+
+        <div id="headers" style="text-align: center;">
+            <h1>Quét mã QR để tiếp tục</h1>
+            <i>Để có thể xem được thông tin cuốn sách bạn cần tìm, vui lòng quét mã QR<br>Ở mặt sau của cuốn sách.</i>
+        </div>
+        <br><br><br>
+        <div class="cam_container">
+            <video id="camera" class="cam" autoplay="autoplay" playsinline=""></video>
+            <canvas id="canvas" style="display: none;" width="640" height="480"></canvas>
+            <p class="centered" id="result">Hãy chiếu chiếu toàn bộ mã QR vào camera của bạn</p>
+        </div>
+    
+
+</body></html>
