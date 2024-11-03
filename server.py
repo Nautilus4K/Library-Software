@@ -64,7 +64,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/":
             self.send_response(302)
-            self.send_header('Location', '/index.html')
+            self.send_header('Location', '/about.html')
             self.end_headers()
         elif self.path == "/get":
             request_header = self.headers.get("Request")
