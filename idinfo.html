@@ -11,7 +11,7 @@
             <ul>
                 <!-- Them ko gian nhin cho no dep -->
                 <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <li><a href="/index.html">📘</a></li>
+                <li><a href="/index.html">📘 Thư viện</a></li>
                 <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <li><a>🔍</a></li>
 
@@ -27,13 +27,21 @@
         <br>
         <!--inline information view-->
         <div>
-            <div style="padding: 20px; display: inline;"><img src="/src/null.png" class="book_img" width="598" height="839"></div>
-            <div style="display: inline; vertical-align: top;">
-                <!--subheader is a div-->
-                <div style="display: inline;">
-                    <p style="margin-left: 20px; margin-top: 0px; display: inline;" class="books_subheader">Hi</p>
+            <div class="container" style="display: flex; align-items: start; padding: 20px;">
+                <div class="text-content" style="display: flex; flex-direction: column; margin-right: 20px;">
+                    <p class="books_subheader link"><strong>Tên sách: </strong> <a id="name">...</a></p>
+                    <p class="books_subheader"><strong>Tác giả: </strong> <a id="author">...</a></p>
+                    <p class="books_subheader"><strong>Loại sách: </strong> <a id="use">...</a></p>
+                    <p class="books_subheader"><strong>Năm xuất bản: </strong> <a id="year">...</a></p>
+                    <p class="books_subheader"><strong>Mô tả: </strong> <br><a id="desc">...</a></p>
+                    <br>
+                    <p class="books_subheader"><strong>Người mượn:</strong> <a id="borrower">...</a></p>
+                    <p class="books_subheader"><strong>Ngày mượn:</strong> <a id="borrowday">...</a></p>
+                    <p class="books_subheader"><strong>Ngày trả:</strong> <a id="borrowexpire">...</a></p>
                 </div>
-            </div>
+              
+                <img src="/src/null.png" class="book_img" width="598" height="839">
+            </div>   
         </div>
         <br>
         <br>

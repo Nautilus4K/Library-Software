@@ -25,19 +25,51 @@ body {
 }
 
 .books_subheader {
-    padding: 20px;
-    background-color: rgb(65, 65, 65);
-    box-shadow: 5px 5px 20px black;
-    border-radius: 22px; /* 22px vi da co padding 20px ben tren nen se dc coi la (22-20)px */
-    color: white;
-    transition: padding 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    size: 20px;
+    padding: 10px;
+    font-size: 30px;
+    margin-left: 50px;
+    margin-right: auto;
+    transition:cubic-bezier(0.165, 0.84, 0.44, 1) .3s;
 }
 
 .books_subheader:hover {
-    padding: 30px;
-    background-color: black;
+    text-indent: 30px;
 }
+
+a.books_subheader {
+    color: inherit; /* Inherits color from .books_subheader */
+    text-decoration: none; /* Removes underline */
+}
+
+a.books_subheader:hover {
+    text-indent: 30px; /* Match hover behavior with p.books_subheader */
+}
+
+.subheader-grid {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Two columns: auto width for strong, flexible for a */
+    align-items: start; /* Align items at the start */
+    column-gap: 10px; /* Space between strong and a */
+    margin-left: 50px; /* Adjust margin as needed */
+}
+
+.subheader-grid strong {
+    grid-column: 1; /* Strong goes in the first column */
+}
+
+.subheader-grid a {
+    grid-column: 2; /* A goes in the second column */
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color for consistency */
+}
+
+.link {
+    color: darkblue;
+}
+.link:hover {
+    color: blue;
+}
+
 .centered_img {
     display: block;
     margin-left: auto;
@@ -76,4 +108,16 @@ ul {
   /* Doi mau sang black */
   li a:hover {
     background-color: #111;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjusts spacing between the paragraphs */
 }
