@@ -37,9 +37,13 @@ rows = cursor.fetchall()
 table = PrettyTable()
 table.field_names = ["ID", "Title", "Author", "Year", "Description", "Use"]
 
+maxcharlimit = 25
 # Add rows to the PrettyTable
 for row in rows:
+    # Assuming row is a tuple
+    row = tuple(str(item[:maxcharlimit-3]) + "..." if len(str(item)) > maxcharlimit else item for item in row)
     table.add_row(row)
+
 
 # Display the table
 print(table)

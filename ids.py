@@ -47,6 +47,9 @@ for row in rows:
 # Display the table
 print(table)
 
+cursor.execute("SELECT id FROM books")
+fetch = cursor.fetchall()
+print("Available books:", fetch)
 ntype=str(input("Enter type of new item (BLANK IF IGNORE): "))
 if (ntype != ""):
     nid = str(input("Enter id of new book (BLANK IF RANDOMIZED): "))

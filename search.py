@@ -6,7 +6,7 @@ def normalize_unicode(text):
     # Normalize to NFKD form and remove diacritics/accents by filtering combining characters
     return ''.join(c for c in unicodedata.normalize('NFKD', text) if not unicodedata.combining(c))
 
-def search_books(cursor, search_query, threshold=60):
+def search_books(cursor, search_query : str, threshold=40):
     # Normalize the search query and split it into keywords
     keywords = normalize_unicode(search_query.lower()).split()
 
@@ -15,7 +15,7 @@ def search_books(cursor, search_query, threshold=60):
     all_titles = cursor.fetchall()  # Fetch all rows as a list of tuples (id, title)
 
     # Debug: Print out all titles fetched
-    print(f"Fetched {len(all_titles)} titles from 'books' table.")
+    # print(f"Fetched {len(all_titles)} titles from 'books' table.")
 
     # A list to store tuples of (id, rank)
     ranked_results = []
@@ -42,7 +42,7 @@ def search_books(cursor, search_query, threshold=60):
             ranked_results.append((book_id, total_match_score))
 
     # Debug: Print out the ranked results before filtering
-    print(f"Ranked Results (before filtering with 'ids'): {ranked_results}")
+    # print(f"Ranked Results (before filtering with 'ids'): {ranked_results}")
 
     # Sort the results by total match score in descending order
     ranked_results.sort(key=lambda x: x[1], reverse=True)
@@ -55,16 +55,38 @@ def search_books(cursor, search_query, threshold=60):
         matching_id = cursor.fetchone()
 
         # Debug: Show each query result
-        print(f"Checking id {book_id} in 'ids' table: {matching_id}")
+        # print(f"Checking id {book_id} in 'ids' table: {matching_id}")
 
         # If a match is found in the `ids` table, store the `id`
         if matching_id:
             valid_ids.append(matching_id[0])
 
-    # Print the valid `id` values
-    print("Valid IDs from 'ids' table:")
-    for valid_id in valid_ids:
-        print(f"id: {valid_id}")
+    return [valid_ids, ranked_results]
+
+def all_books(cursor):
+    """
+    Retrieve all books that have the specified format and return them with a confidence score of 100.
+
+    Parameters:
+    - cursor: Database cursor for executing SQL queries.
+    - format_id: The format ID to match in the `ids` table.
+
+    Returns:
+    - A list of valid book IDs.
+    - A list of tuples (id, rank) with rank fixed at 100 for each matched book.
+    """
+    # Query the `ids` table to get all book IDs with the specified format type
+    cursor.execute("SELECT id FROM ids")
+    matching_ids = cursor.fetchall()
+
+    # Extract book IDs from the fetched rows
+    valid_ids = [row[0] for row in matching_ids]
+
+    # Assign a rank of 100 to each book in the `ranked_results`
+    ranked_results = [(book_id, 100) for book_id in valid_ids]
+
+    return valid_ids, ranked_results
+
 
 # Example usage
 if __name__ == "__main__":
@@ -73,4 +95,9 @@ if __name__ == "__main__":
     cursor = db.cursor()
     
     search_query = input("Enter book name or keywords: ")
-    search_books(cursor, search_query)
+    ids = search_books(cursor, search_query)
+    for i in range(len(ids[0])):
+        valid_id = ids[0][i]
+        bktype = ids[1][i][0]
+        rank = ids[1][i][1]
+        print(f"id: {valid_id} | type: {bktype} | confidence: {rank}%")

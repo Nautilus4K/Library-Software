@@ -6,6 +6,7 @@ import sqlite3
 from urllib.parse import parse_qs, urlparse
 import json
 import ssl  # Import SSL module
+from search import search_books, normalize_unicode, all_books
 
 db_name = "data"
 
@@ -13,7 +14,7 @@ db = sqlite3.connect(f"{db_name}.db")
 cursor = db.cursor()
 
 BIND_HOST = "0.0.0.0"
-PORT = 8008
+PORT = 443
 DEFAULT_FILE_PATH = './index.html'
 LOG_FILE = "server_output.log"
 STATIC_DIR = './src'
@@ -57,6 +58,29 @@ def get_code_data(code: str):
         "borrow_date": result3[2],
         "borrow_expire": result3[3]
     }
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
+def get_search_data(idstr: str):
+    ids = search_books(cursor, idstr, 55)
+
+    valid_ids = []
+    bktypes = []
+    ranks = []
+    titles = []
+    for i in range(len(ids[0])):
+        valid_ids.append(ids[0][i])
+        bktypes.append(ids[1][i][0])
+        ranks.append(ids[1][i][1])
+
+        cursor.execute("SELECT title FROM books WHERE id=?", (ids[1][i][0],))
+        titles.append(cursor.fetchone()[0])
+
+    json_data = {
+        "valid_ids": valid_ids,
+        "bktypes": bktypes,
+        "ranks": ranks,
+        "titles": titles
+    }
 
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
@@ -70,6 +94,20 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             request_header = self.headers.get("Request")
             if request_header:
                 self.write_response(get_code_data(request_header), content_type="text/plain; charset=utf-8")
+            else:
+                request_header = self.headers.get("Search")
+                if request_header:
+                    # ids = search_books(cursor, request_header)
+                    # for i in range(len(ids[0])):
+                    #     valid_id = ids[0][i]
+                    #     bktype = ids[1][i][0]
+                    #     rank = ids[1][i][1]
+                    #     print(f"id: {valid_id} | type: {bktype} | confidence: {rank}%")
+                    # try:
+                    #     self.write_response(str(ids[0]).encode('utf-8'), content_type="text/plain; charset=utf-8")
+                    # except ssl.SSLEOFError:
+                    #     print("Some random error idk")
+                    self.write_response(get_search_data(request_header), content_type="text/plain; charset=utf-8")
         else:
             parsed_path = urlparse(self.path)
             file_path = '.' + parsed_path.path
@@ -84,7 +122,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             elif os.path.exists(file_path):
                 self.serve_static_file(file_path)
             else:
-                self.send_error(404, "File not found")
+                # self.send_error(404, "File not found")
+                self.send_response(302)
+                self.send_header('Location', '/')
+                self.end_headers()
 
     def serve_static_file(self, file_path):
         mime_type, _ = mimetypes.guess_type(file_path)
@@ -120,6 +161,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.send_header('Content-Length', str(len(content)))
         self.end_headers()
         self.wfile.write(content)
+        print("-----------------------------------")
+        print("Sent back content: ")
+        print("     Content: "+str(content))
+        print("     Content-Type: "+str(content_type))
+        print("     Content-Length: "+str(len(content)))
+        print("-----------------------------------")
 
 class Logger:
     def __init__(self, logfile):
