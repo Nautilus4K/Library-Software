@@ -45,11 +45,6 @@ a.books_subheader:hover {
     text-indent: 30px; /* Match hover behavior with p.books_subheader */
 }
 
-.navbuttons {
-    margin-left: 40px;
-    margin-top: 40px;
-}
-
 .link {
     color: darkblue;
 }
@@ -65,37 +60,68 @@ a.books_subheader:hover {
 }
 
 /* Nav bar */
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    /* background-color: #33333300; */
+/* Navbar Styling */
+.navbar {
     display: flex;
-    position: fixed;
-    /* justify-content: space-evenly; */
-    /* float: right; */
-  }
-  
-  li {
-    float: left;
-  }
-  
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 18px 20px;
-    text-decoration: none;
-    background-color: #33333391;
-    border-radius: 10px;
-    transition: 0.3s;
-  }
-  
-  /* Doi mau sang black */
-  li a:hover {
-    background-color: #111;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 2px solid rgb(223, 251, 219);
+    height: 5rem;
 }
+
+/* Logo Styling */
+.logo img {
+    width: 4rem;
+    height: 4rem;
+    margin-left: 1rem;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adds spacing between menu items */
+}
+
+/* Profile Button */
+.navbutton_userprofile {
+    margin-left: auto; /* Push to the far right */
+    background-color: rgb(255, 200, 200); /* Highlighted for visibility */
+    border-radius: 5px;
+    padding: 15px 20px; /* Increased padding for bigger button */
+    font-size: 1.5rem; /* Increased font size */
+}
+
+.navbutton_userprofile:hover {
+    background-color: rgb(255, 170, 170); /* Hover effect */
+}
+
+/* Navigation Links */
+.nav-menu a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem; /* Larger font size for links */
+    font-weight: bold;
+    padding: 15px 20px; /* Increased padding for bigger clickable area */
+    border-radius: 5px; /* Consistent rounded corners */
+}
+
+.nav-menu a:hover {
+    background-color: rgb(223, 251, 219);
+}
+
+/* Desktop View Adjustments */
+@media screen and (min-width: 600px) {
+    .navbar {
+        padding: 1rem 2rem;
+    }
+
+    .nav-menu a:hover {
+        background-color: rgb(223, 251, 219);
+    }
+}
+/* End of navbar */
 
 .searchbar {
     width: 50%; /* Adjust this percentage as needed */

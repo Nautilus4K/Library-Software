@@ -1,4 +1,8 @@
-from fuzzywuzzy import fuzz
+from os import system as cmd
+try: from fuzzywuzzy import fuzz
+except ImportError:
+    cmd("pip install fuzzywuzzy")
+    from fuzzywuzzy import fuzz
 import unicodedata
 
 # Function to normalize and remove accents
