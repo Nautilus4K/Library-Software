@@ -84,6 +84,26 @@ def get_search_data(idstr: str):
 
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
+def get_user_data(username: str):
+    cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+    userdata = cursor.fetchone() # ("nautilus", "123", "Nautilus4K", 1732372092, None)
+    print(userdata)
+    if (userdata == None):
+        userdata = [None, None, None, None, None]
+    else: userdata = list(userdata)
+    if (userdata[2] == None): userdata[2] = userdata[0]
+
+    json_data = {
+        "username": userdata[0],
+        "password": userdata[1],
+        "name": userdata[2],
+        "date": userdata[3],
+        "phone": userdata[4]
+    }
+
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
+
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/":
@@ -108,6 +128,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     # except ssl.SSLEOFError:
                     #     print("Some random error idk")
                     self.write_response(get_search_data(request_header), content_type="text/plain; charset=utf-8")
+                else:
+                    request_header = self.headers.get("Username")
+                    if request_header:
+                        self.write_response(get_user_data(request_header), content_type="text/plain; charset=utf-8")
         else:
             parsed_path = urlparse(self.path)
             file_path = '.' + parsed_path.path

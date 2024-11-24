@@ -1,22 +1,56 @@
-html {
+html, body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-body {
     margin: 0;
+    padding: 0;
+    height: 100%;
+    /* overflow: hidden; */
 }
 
-.centered {
-    text-align: center;
-}
-
-.cam_container {
-    align-items: center;
-    text-align: center;
+.fullscreen-container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
 .cam {
-    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px 0;
+}
+
+.overlay h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 60px;
+    margin: 0;
+}
+
+.overlay i {
+    font-size: 18px;
+}
+
+.overlay-info {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+    font-size: 14px;
 }
 
 .book_img {
@@ -50,6 +84,12 @@ a.books_subheader:hover {
 }
 .link:hover {
     color: blue;
+}
+
+.centered {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .centered_img {
@@ -110,17 +150,6 @@ a.books_subheader:hover {
 .nav-menu a:hover {
     background-color: rgb(223, 251, 219);
 }
-
-/* Desktop View Adjustments */
-@media screen and (min-width: 600px) {
-    .navbar {
-        padding: 1rem 2rem;
-    }
-
-    .nav-menu a:hover {
-        background-color: rgb(223, 251, 219);
-    }
-}
 /* End of navbar */
 
 .searchbar {
@@ -174,4 +203,52 @@ a.books_subheader:hover {
     color: black;
     text-decoration: none;
     font-size: 20px;
+}
+
+@media screen and (min-width: 600px) {
+    .navbar {
+        padding: 1rem 2rem;
+    }
+
+    .nav-menu a:hover {
+        background-color: rgb(223, 251, 219);
+    }
+}
+
+@media (max-width: 1000px) {
+    .logo {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .navbar {
+        padding: 3rem 5rem;
+    }
+
+    .nav-menu {
+        display: block;
+        align-items: center;
+        gap: 0px; /* Adds spacing between menu items */
+    }
+
+    /* Profile Button */
+    .navbutton_userprofile {
+        margin-left: auto; /* Push to the far right */
+        background-color: rgb(255, 200, 200); /* Highlighted for visibility */
+        border-radius: 5px;
+        padding: 15px 20px; /* Increased padding for bigger button */
+        font-size: 1.5rem; /* Increased font size */
+        display: block;
+    }
+
+    /* Navigation Links */
+    .nav-menu a {
+        display: block;
+        text-decoration: none;
+        color: black;
+        font-size: 1rem; /* Larger font size for links */
+        font-weight: bold;
+        padding: 15px 20px; /* Increased padding for bigger clickable area */
+        border-radius: 5px; /* Consistent rounded corners */
+    }
 }

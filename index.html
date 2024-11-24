@@ -3,7 +3,9 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>Thư viện Trường Trung Học Cơ Sở Đoàn Thị Điểm</title>
         <link rel="stylesheet" type="text/css" href="src/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="src/qrLoader.js" defer="defer"></script>
+        <script src="/src/userManager.js" defer></script>
 
         <!-- Them thu vien doc QR jsQR -->
         <script src="src/jsQR.js"></script>
@@ -19,25 +21,23 @@
                 </div>
                 <div class="nav-menu">
                     <a href="/index.html">📘 Thư viện</a>
-                    <a href="/search.html">🔍</a>
-                    <a class="navbutton_userprofile" href="#">Bạn</a>
+                    <a href="/search.html">🔍 Tìm kiếm </a>
+                    <a class="navbutton_userprofile" href="#" id="user">Bạn</a>
                 </div>
             </nav>
         </header>
         
-        <br><br>
-        <h1 style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 60px; padding-left: 300px; padding-right: 300px; color:#5b0000" class="centered">Thư viện Trường THCS Đoàn Thị Điểm</h1>
-
-        <div id="headers" style="text-align: center;">
-            <h1>Quét mã QR để tiếp tục</h1>
-            <i>Để có thể xem được thông tin cuốn sách bạn cần tìm, vui lòng quét mã QR<br>Ở mặt sau của cuốn sách.</i>
-        </div>
-        <br><br><br>
-        <div class="cam_container">
-            <video id="camera" class="cam" autoplay="autoplay" playsinline=""></video>
+        <div class="fullscreen-container">
+            <video id="camera" class="cam" autoplay playsinline muted></video>
             <canvas id="canvas" style="display: none;" width="640" height="480"></canvas>
-            <p class="centered" id="result">Hãy chiếu chiếu toàn bộ mã QR vào camera của bạn</p>
+            <div class="overlay">
+                <h1>Quét mã QR để tiếp tục</h1>
+                <i>Để có thể xem được thông tin cuốn sách bạn cần tìm, vui lòng quét mã QR<br>Ở mặt sau của cuốn sách.</i>
+                <p id="result">Hãy chiếu chiếu toàn bộ mã QR vào camera của bạn</p>
+            </div>
+            <p class="overlay-info">
+                <i>Sản phẩm trình bày Khoa Học Kỹ Thuật, chưa được đem tiến hành thực tế</i>
+            </p>
         </div>
-        <br><br><p class="centered"><i>Sản phẩm trình bày Khoa Học Kỹ Thuật, chưa được đem tiến hành thực tế</i></p>
 
 </body></html>
