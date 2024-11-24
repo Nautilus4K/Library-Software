@@ -1,10 +1,102 @@
 html, body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100%;
-    /* overflow: hidden; */
+    height: 100%; /* Ensure body takes full viewport height */
+    width: 100%;  /* Ensure body takes full viewport width */
+    overflow-x: hidden; /* Prevent scrollbars if unnecessary */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.login_body{
+    background-image: url("/ext/bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensures the image covers the screen */
+    height: 100%; /* Matches full height of the viewport */
+    width: 100%;  /* Matches full width of the viewport */
+}
+
+.login_body p {
+    color: white;
+    font-size: 17px;
+    font-weight: 100px;
+}
+
+.login_body {
+    background-image: url("/ext/bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    height: 100%;
+}
+
+.login_container {
+    background-color: #ffffffbd;
+    position: inherit;
+    top: 50%;
+    margin-left: 100px;
+    margin-right: 100px;
+    border-radius: 20px;
+    justify-content: center;
+    text-align: center;
+    box-shadow: #888 0px 0px 20px;
+}
+
+.login_container h1 {
+    padding-top: 50px;
+    font-size: 40px;
+    color: rgb(0, 0, 146);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.login_container h3 {
+    font-style: italic;
+}
+
+.login_form label {
+    padding: 20px;
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    font-style: oblique;
+}
+
+.login_form input {
+    display: inline;
+    border: 0;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    width: 500px;
+    background-color: #eee
+}
+
+.wrap button {
+    padding: 20px;
+    border: 0;
+    border-radius: 15px;
+    background-color: #eee;
+    transition: .2s;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.wrap button:hover {
+    cursor: pointer;
+    padding-left: 50px;
+    padding-right: 50px;
+
+    /* width: 100px; */
+
+    background-color: #5e9253;
+    color: white;
+}
+
+.wrap {
+    padding-bottom: 40px
+}
+/* END OF LOGIN SCREEN */
 
 .fullscreen-container {
     position: relative;

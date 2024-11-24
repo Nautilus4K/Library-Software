@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlparse
 import json
 import ssl  # Import SSL module
 from search import search_books, normalize_unicode, all_books
+from hashlib import sha256
 
 db_name = "data"
 
@@ -87,7 +88,7 @@ def get_search_data(idstr: str):
 def get_user_data(username: str):
     cursor.execute("SELECT * FROM users WHERE username=?", (username,))
     userdata = cursor.fetchone() # ("nautilus", "123", "Nautilus4K", 1732372092, None)
-    print(userdata)
+    # print(userdata)
     if (userdata == None):
         userdata = [None, None, None, None, None]
     else: userdata = list(userdata)
@@ -95,14 +96,34 @@ def get_user_data(username: str):
 
     json_data = {
         "username": userdata[0],
-        "password": userdata[1],
+        # "password": userdata[1],  # Dangerous. Could be used to some degree of advantages
         "name": userdata[2],
         "date": userdata[3],
-        "phone": userdata[4]
+        # "phone": userdata[4]  # Uneeded. Probably just wasted some more bandwidths with this on.
+                                # Also has to limit the amount of personal data could be accessed
+                                # via API calls
     }
 
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
+def check_login_credentials(username: str, passwd: str):
+    hashedpass = sha256(passwd.encode("utf-8")).hexdigest()
+    cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+    userdata = cursor.fetchone() # ("nautilus", "123", "Nautilus4K", 1732372092, None)
+    corr = True
+
+    # If no user is found to be matched
+    if (userdata == None):
+        corr = False
+    elif (userdata[1] != hashedpass):
+        corr = False
+
+    json_data = {
+        "username": username,
+        "correct": corr
+    }
+
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -132,6 +153,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     request_header = self.headers.get("Username")
                     if request_header:
                         self.write_response(get_user_data(request_header), content_type="text/plain; charset=utf-8")
+        elif self.path == "/logincheck":
+            username = self.headers.get("Username")
+            passwd = self.headers.get("Password")
+            if username and passwd:
+                # If username and passwd are all supplied. Now check for matches
+                self.write_response(check_login_credentials(username, passwd), content_type="text/plain; charset=utf-8")
         else:
             parsed_path = urlparse(self.path)
             file_path = '.' + parsed_path.path

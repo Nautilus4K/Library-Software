@@ -3,6 +3,7 @@ import os
 import time  # For Unix timestamp handling
 import random
 import string
+from hashlib import sha256
 
 try:
     from prettytable import PrettyTable
@@ -47,10 +48,10 @@ print(table)
 
 nusername=str(input("Enter new username (BLANK IF IGNORE): "))
 if (nusername != ""):
-    npasswd = str(input("Enter password: "))
+    npasswd = sha256(str(input("Enter password: ")).encode("utf-8")).hexdigest()
     nname = str(input("Enter new name (BLANK IF NULL): "))
     if nname == "": nname = None
-    nphone = str(input("Enter phone number (BLANK IF NULL: "))
+    nphone = str(input("Enter phone number (BLANK IF NULL): "))
     if nphone == "": nphone = None
     data = (nusername, npasswd, nname, int(time.time()), nphone)
 
