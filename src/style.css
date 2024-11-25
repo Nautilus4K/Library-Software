@@ -16,10 +16,13 @@ html, body {
     width: 100%;  /* Matches full width of the viewport */
 }
 
+
 .login_body p {
-    color: white;
+    color: rgb(255, 0, 0); /* Only zhe alert is a p element inside of login page */
+                             /* Dont blame me. Its the only way I can do this... */
     font-size: 17px;
     font-weight: 100px;
+    font-style: oblique;
 }
 
 .login_body {
@@ -33,18 +36,19 @@ html, body {
 
 .login_container {
     background-color: #ffffffbd;
-    position: inherit;
+    position: relative; /* 'inherit' might cause unintended issues; 'relative' is more flexible */
     top: 50%;
-    margin-left: 100px;
-    margin-right: 100px;
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Perfect centering */
+    width: 600px; /* Adjust width to make it smaller */
+    padding: 20px; /* Adjust internal width */
     border-radius: 20px;
     justify-content: center;
     text-align: center;
-    box-shadow: #888 0px 0px 20px;
+    box-shadow: #949494 0px 0px 20px;
 }
 
 .login_container h1 {
-    padding-top: 50px;
     font-size: 40px;
     color: rgb(0, 0, 146);
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -55,7 +59,7 @@ html, body {
 }
 
 .login_form label {
-    padding: 20px;
+    padding-top: 40px;
     display: block;
     font-size: 20px;
     font-weight: 500;
@@ -68,7 +72,7 @@ html, body {
     border-radius: 10px;
     font-size: 20px;
     padding: 10px;
-    width: 500px;
+    width: 300px;
     background-color: #eee
 }
 
@@ -94,7 +98,8 @@ html, body {
 }
 
 .wrap {
-    padding-bottom: 40px
+    padding-bottom: 40px;
+    padding-top: 40px;
 }
 /* END OF LOGIN SCREEN */
 

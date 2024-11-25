@@ -55,6 +55,13 @@ else {
             deleteAllCookies()
             window.location.href = "/login.html"
         }
-        userElement.textContent = json["name"]
+        else {
+            userElement.textContent = json["name"]
+
+            // By renewing user's logging in state, it would allow for us
+            // to make sure that users that are not visiting the site
+            // for more than 7 days are gonna be logged out (for safety)
+            setCookie("username", username, 7) // Renew user login state
+        }
     })
 }
