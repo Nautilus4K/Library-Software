@@ -141,6 +141,7 @@ def modify_account(username: str, passwd: str, newpass: str):
     else:
         # print("Updating...")
         cursor.execute("UPDATE users SET password = ? WHERE username = ?", (hashednewpass, username))
+        db.commit()
 
     # print("Sending back...")
     json_data = {

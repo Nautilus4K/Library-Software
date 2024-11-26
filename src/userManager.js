@@ -37,7 +37,8 @@ if (username == "") {
     // Do some stuffs to make sure user needs to be authorized (via accounts) to even access the infrastructure in the first place
     // Some stuffs about, idk, security?
     userElement.textContent = "Đăng nhập"
-    window.location.href = "/login.html"
+    // window.location.href = "/login.html"
+    userElement.href = "/login.html"
 }
 else {
     // Fetch information from the API calls. It should be working as intended
@@ -53,7 +54,7 @@ else {
         if (json["name"] == null) {
             // Performing a hard reset on cookies. Because they're probably corrupted.
             deleteAllCookies()
-            window.location.href = "/login.html"
+            userElement.href = "/login.html"
         }
         else {
             userElement.textContent = json["name"]

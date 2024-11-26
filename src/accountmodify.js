@@ -120,3 +120,7 @@ function signout() {
     deleteAllCookies()
     window.location.href=window.location.href
 }
+
+if (!getCookie("username")) {
+    window.location.href = "/"
+}
