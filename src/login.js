@@ -5,6 +5,22 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
+
 function submit() {
     console.log("Checking supplied credentials");
 
@@ -50,3 +66,12 @@ function submit() {
         console.error("Error:", error);
     });
 }
+
+if (getCookie("username")) window.location.href = "/"
+
+document.addEventListener("keydown", key => {
+    if (key.code == "Enter" && (document.activeElement.id == "first" || document.activeElement.id == "password")) {
+        submit()
+        // console.log(document.activeElement.id)
+    }
+})

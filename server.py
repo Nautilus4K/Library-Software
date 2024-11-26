@@ -125,6 +125,31 @@ def check_login_credentials(username: str, passwd: str):
 
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
+def modify_account(username: str, passwd: str, newpass: str):
+    # print("Hashing...")
+    hashedpass = sha256(passwd.encode("utf-8")).hexdigest()
+    hashednewpass = sha256(newpass.encode("utf-8")).hexdigest()
+
+    # print("Getting information...")
+    cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+    userdata = cursor.fetchone()
+
+    # print("Checking integrity...")
+    error = False
+    if (userdata == None): error = True
+    elif (userdata[1] != hashedpass): error = True
+    else:
+        # print("Updating...")
+        cursor.execute("UPDATE users SET password = ? WHERE username = ?", (hashednewpass, username))
+
+    # print("Sending back...")
+    json_data = {
+        "username": username,
+        "error": error,
+    }
+
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/":
@@ -159,6 +184,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             if username and passwd:
                 # If username and passwd are all supplied. Now check for matches
                 self.write_response(check_login_credentials(username, passwd), content_type="text/plain; charset=utf-8")
+        elif self.path == "/modifyaccounts":
+            username = self.headers.get("Username")
+            passwd = self.headers.get("Password")
+            newpass = self.headers.get("Newpass")
+            if username and passwd and newpass:
+                # Pass all parameters (if all of them are present) into modify_account so that we can do the back-end stuffs
+                # Is not really good cuz maybe there could be problems. Let's put that aside...
+                self.write_response(modify_account(username, passwd, newpass), content_type="text/plain; charset=utf-8")
         else:
             parsed_path = urlparse(self.path)
             file_path = '.' + parsed_path.path

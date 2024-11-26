@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tìm kiếm | Thư viện Trường Trung Học Cơ Sở Đoàn Thị Điểm</title>
+        <link rel="stylesheet" type="text/css" href="src/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <script src="src/idLoader.js" defer></script> -->
+        <script src="/src/accountmodify.js" defer></script>
+        <script src="/src/userManager.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/favicon.ico" alt="Logo">
+                    </a>
+                </div>
+                <div class="nav-menu">
+                    <a href="/index.html">📘 Thư viện</a>
+                    <a href="/search.html">🔍 Tìm kiếm</a>
+                    <a class="navbutton_userprofile" href="/accountsettings.html" id="user">Bạn</a>
+                </div>
+            </nav>
+        </header>
+        <br><br>
+
+        <h1 class="centered accountmodify_header">Cài đặt tài khoản</h1>
+
+        <div class="changepasswd_container">
+            <h3>Đổi mật khẩu</h3>
+            <br>
+
+            <p class="centered">Mật khẩu hiện tại <input type="password" id="password" class="changepasswd_inputfield"></p>
+            <p class="password_alert" style="display: none;" id="alerto"></p>
+
+            <br>
+            <p class="centered">Mật khẩu mới <input type="password" id="newpass" class="changepasswd_inputfield"></p>
+            <p class="password_alert" style="display: none;" id="alerto1"></p>
+            
+            <br>
+            <p class="centered">Nhập lại mật khẩu mới <input type="password" id="confirmpass" class="changepasswd_inputfield"></p>
+            <p class="password_alert" style="display: none;" id="alerto2"></p>
+
+            <div class="wrap">
+                <p class="password_alert" style="display: none;" id="alerto3"></p>
+                <button type="button" onclick="changepasswd()">Đổi mật khẩu</button>
+            </div>
+        </div>
+        <br><br>
+        <div class="signout_container">
+            <h3 class="signout_label">Đăng xuất</h3>
+            <button type="button" class="signout_button" onclick="signout()">Đăng xuất</button>
+        </div>
+        
+        <br>
+        <br>
+        <p class="centered"><i>Sản phẩm trình bày Khoa Học Kỹ Thuật, chưa được đem tiến hành thực tế</i></p>
+    </body>
+</html>
