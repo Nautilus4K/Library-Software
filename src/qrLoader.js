@@ -34,6 +34,8 @@ async function startVideoStream() {
     }
 }
 
+var scanned = false
+
 // Function to process video frames and scan for QR codes
 function tick() {
     if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
@@ -44,9 +46,10 @@ function tick() {
         const imageData = canvasContext.getImageData(0, 0, canvasElement.width, canvasElement.height);
         const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
 
-        if (qrCode) {
+        if (qrCode && !scanned) {
             resultElement.textContent = "Đã tìm thấy mã QR: " + qrCode.data;
             window.location.href = "/idinfo.html?code=" + qrCode.data;
+            scanned = true
         } else {
             resultElement.textContent = "Hãy chiếu chiếu toàn bộ mã QR vào camera của bạn";
         }

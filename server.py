@@ -32,10 +32,10 @@ def get_code_data(code: str):
         cursor.execute('SELECT * FROM books WHERE id=?', (result[1],))
         result2 = cursor.fetchone()
     except TypeError:
-        result = ('null', 'null', 'null', 'null')
+        result = ('null', 'null', 'null', 'null', 'null')
         result2 = ('null', 'null', 'null', 'null', 'null', 'null')
     except:
-        result = ('null', 'null', 'null', 'null')
+        result = ('null', 'null', 'null', 'null', 'null')
         result2 = ('null', 'null', 'null', 'null', 'null', 'null')
 
     try:
@@ -48,8 +48,9 @@ def get_code_data(code: str):
     json_data = {
         "id": result[0],
         "type": result[1],
-        "donator": result[2],
-        "donation_day": result[3],
+        "episode": result[2],
+        "donator": result[3],
+        "donation_day": result[4],
         "title": result2[1],
         "author": result2[2],
         "year_published": result2[3],
@@ -62,27 +63,41 @@ def get_code_data(code: str):
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
 def get_search_data(idstr: str):
-    ids = search_books(cursor, idstr, 55)
+    # Perform the search with the updated function
+    valid_ids, detailed_results = search_books(cursor, idstr, 55)
 
-    valid_ids = []
+    # Initialize lists to store the results
     bktypes = []
     ranks = []
     titles = []
-    for i in range(len(ids[0])):
-        valid_ids.append(ids[0][i])
-        bktypes.append(ids[1][i][0])
-        ranks.append(ids[1][i][1])
+    episodes = []
 
-        cursor.execute("SELECT title FROM books WHERE id=?", (ids[1][i][0],))
-        titles.append(cursor.fetchone()[0])
+    # Iterate over the detailed results
+    for valid_id, book_id, rank in detailed_results:
+        # Append the data to respective lists
+        bktypes.append(book_id)  # Original book ID (type)
+        ranks.append(rank)       # Confidence rank
 
+        # Fetch the title for the current book_id
+        cursor.execute("SELECT title FROM books WHERE id=?", (book_id,))
+        title_result = cursor.fetchone()
+        titles.append(title_result[0] if title_result else "Unknown")  # Handle missing titles
+
+        # Fetch the episode information for the valid_id
+        cursor.execute("SELECT ep FROM ids WHERE id=?", (valid_id,))
+        episode_result = cursor.fetchone()
+        episodes.append(episode_result[0] if episode_result else "N/A")  # Handle missing episodes
+
+    # Build the JSON data
     json_data = {
         "valid_ids": valid_ids,
         "bktypes": bktypes,
         "ranks": ranks,
-        "titles": titles
+        "titles": titles,
+        "episodes": episodes
     }
 
+    # Return the JSON data as a UTF-8 encoded string
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
 def get_user_data(username: str):

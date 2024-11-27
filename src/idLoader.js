@@ -76,12 +76,18 @@ fetch("/get", {
   const useEl = document.getElementById("use")
   const yearEl = document.getElementById("year")
   const descEl = document.getElementById("desc")
+  const episodeEl = document.getElementById("episode")
+  const img = document.getElementById("img")
 
   nameEl.textContent = json["title"];
   nameEl.href = "/search.html?query=" + json["title"].replace(/\s+/g, "+");
+
+  episodeEl.textContent = json["episode"]
 
   authorEl.textContent = json["author"]
   useEl.textContent = json["use"]
   yearEl.textContent = json["year_published"]
   descEl.textContent = json["description"]
+
+  img.src = "/book_thumbnails/" + json["type"] + "_" + json["episode"] + ".jpg"
 });

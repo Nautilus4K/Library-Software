@@ -67,6 +67,11 @@ if (nbook != ""):
         INSERT OR IGNORE INTO  books (id, title, author, year, description, use)
         VALUES (?, ?, ?, ?, ?, ?)
     ''', data)
+    db.commit()
+
+remove = str(input("Enter id of book you want to remove (BLANK IF IGNORE): "))
+if remove != "":
+    cursor.execute("DELETE FROM books WHERE id=?", (remove,))
 
 # Commit the transaction and close the connection
 db.commit()

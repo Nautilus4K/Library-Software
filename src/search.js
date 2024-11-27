@@ -1,3 +1,8 @@
+function normalizeUnicode(text) {
+    // Normalize to NFKD form and remove diacritics/accents by filtering combining characters
+    return text.normalize('NFKD').replace(/[\u0300-\u036f]/g, "");
+}
+
 function search() {
     var oldElements = document.getElementById("result")
     while (oldElements != null) {
@@ -16,7 +21,7 @@ function search() {
     fetch("/get", {
         method: "GET",
         headers: {
-            "Search": searchContent
+            "Search": normalizeUnicode(searchContent)
         }
     })
     .then((response) => response.json())
@@ -27,12 +32,16 @@ function search() {
         const bktypes = json["bktypes"]
         const ranks = json["ranks"]
         const titles = json["titles"]
+        const episodes = json["episodes"]
 
         for (let i in valid_ids) {
             // console.log("A"+i)
 
             const newElement = document.createElement("a")
-            newElement.innerText = "(" + ranks[i] + "%)" + "["+valid_ids[i]+"] " + titles[i] + "\n"
+            // newElement.innerText = "(" + ranks[i] + "%)" + "["+valid_ids[i]+"] " + titles[i] + "\n"
+            if (episodes[i] != 0)
+                newElement.innerText ="["+valid_ids[i]+"] " + titles[i] + " (Tập " + episodes[i] + ")" + "\n"
+            else newElement.innerText ="["+valid_ids[i]+"] " + titles[i] + "\n"
             newElement.id = "result"
             newElement.href = "/idinfo.html?code="+valid_ids[i]
             newElement.style = "font-size: 20px; text-decoration: none; color: black; padding: 20px; text-align: center;"

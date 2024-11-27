@@ -233,39 +233,6 @@ html, body {
     font-size: 14px;
 }
 
-.book_img {
-    border-radius: 20px;
-    box-shadow: 10px 10px 20px;
-}
-
-.books_subheader {
-    padding: 10px;
-    font-size: 30px;
-    margin-left: 50px;
-    margin-right: auto;
-    transition:cubic-bezier(0.165, 0.84, 0.44, 1) .3s;
-}
-
-.books_subheader:hover {
-    text-indent: 30px;
-}
-
-a.books_subheader {
-    color: inherit; /* Inherits color from .books_subheader */
-    text-decoration: none; /* Removes underline */
-}
-
-a.books_subheader:hover {
-    text-indent: 30px; /* Match hover behavior with p.books_subheader */
-}
-
-.link {
-    color: darkblue;
-}
-.link:hover {
-    color: blue;
-}
-
 .centered {
     text-align: center;
     margin-right: auto;
@@ -374,6 +341,57 @@ a.books_subheader:hover {
     align-items: center;
 }
 
+/* IDINFO PAGE */
+.idinfo_container {
+    display: flex; 
+    align-items: start; 
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.idinfo_textContent {
+    display: flex; 
+    flex-direction: column; 
+    margin-right: 20px;
+}
+
+.book_img {
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px gray;
+    max-width:598px;
+    max-height:839px;
+}
+
+.books_subheader {
+    padding: 10px;
+    font-size: 30px;
+    margin-left: 50px;
+    margin-right: auto;
+    transition:cubic-bezier(0.165, 0.84, 0.44, 1) .3s;
+}
+
+.books_subheader:hover {
+    text-indent: 30px;
+}
+
+a.books_subheader {
+    color: inherit; /* Inherits color from .books_subheader */
+    text-decoration: none; /* Removes underline */
+}
+
+a.books_subheader:hover {
+    text-indent: 30px; /* Match hover behavior with p.books_subheader */
+}
+
+.link {
+    color: darkblue;
+}
+.link:hover {
+    color: blue;
+}
+
+/* IDINFO END */
+
 .text-content {
     display: flex;
     flex-direction: column;
@@ -405,7 +423,7 @@ a.books_subheader:hover {
     }
 
     .navbar {
-        padding: 3rem 5rem;
+        padding: 4rem 5rem;
     }
 
     .nav-menu {
@@ -429,6 +447,7 @@ a.books_subheader:hover {
         display: block;
         text-decoration: none;
         color: black;
+        width: 130px;
         font-size: 1rem; /* Larger font size for links */
         font-weight: bold;
         padding: 15px 20px; /* Increased padding for bigger clickable area */
@@ -685,4 +704,58 @@ a.books_subheader:hover {
         padding-top: 40px;
     }
     /* END OF LOGIN SCREEN */
+
+    /* IDINFO PAGE */
+    .idinfo_container {
+        display: block; 
+        align-items: start; 
+        padding: 20px;
+        justify-content: space-between;
+    }
+
+    .idinfo_textContent {
+        display: flex; 
+        flex-direction: column; 
+        margin-right: 20px;
+    }
+
+    .book_img {
+        display: block;
+        border-radius: 20px;
+        box-shadow: 0px 0px 20px gray;
+        width:90%;
+        height:auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .books_subheader {
+        padding: 10px;
+        font-size: 16px;
+        margin-left: 50px;
+        margin-right: auto;
+        transition:cubic-bezier(0.165, 0.84, 0.44, 1) .3s;
+    }
+
+    .books_subheader:hover {
+        text-indent: 30px;
+    }
+
+    a.books_subheader {
+        color: inherit; /* Inherits color from .books_subheader */
+        text-decoration: none; /* Removes underline */
+    }
+
+    a.books_subheader:hover {
+        text-indent: 30px; /* Match hover behavior with p.books_subheader */
+    }
+
+    .link {
+        color: darkblue;
+    }
+    .link:hover {
+        color: blue;
+    }
+
+    /* IDINFO END */
 }
