@@ -61,6 +61,12 @@ if (nusername != ""):
         VALUES (?, ?, ?, ?, ?)
     ''', data)
 
+    db.commit()
+
+remove = str(input("Enter username of user you want to remove (BLANK IF IGNORE): "))
+if remove != "":
+    cursor.execute("DELETE FROM users WHERE username=?", (remove,))
+
 # Commit the transaction and close the connection
 db.commit()
 
