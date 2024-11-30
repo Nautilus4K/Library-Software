@@ -4,7 +4,7 @@ try:
     from deepface import DeepFace
     import mediapipe as mp
 except:
-    os.system("pip install mediapipe deepface opencv-python-headless tensorflow")
+    os.system("pip install mediapipe deepface opencv-python-headless tensorflow tf-keras")
     import cv2
     from deepface import DeepFace
     import mediapipe as mp

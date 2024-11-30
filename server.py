@@ -8,6 +8,10 @@ import json
 import ssl  # Import SSL module
 from search import search_books, normalize_unicode, all_books
 from hashlib import sha256
+import cgi
+import base64
+import random
+import string
 
 db_name = "data"
 
@@ -166,6 +170,38 @@ def modify_account(username: str, passwd: str, newpass: str):
 
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
+def generate_token():
+    # Characters to choose from: uppercase, lowercase letters, and digits
+    characters = string.ascii_letters + string.digits
+    # Create 5 groups of 5 characters joined by dashes
+    token = "-".join(
+        "".join(random.choices(characters, k=5)) for _ in range(5)
+    )
+    return token
+
+def get_facial_result(token: str):
+    json_data = {}
+    currpath = os.getcwd()+"/faceserver_workspaces/result/"
+    if os.path.exists(currpath+token+".json"):
+        f = open(currpath+token+".json")
+        facialresult = json.loads(f.read())
+
+        # If result exists
+        json_data = {
+            "status": "SUCCESSFUL",
+            "error": facialresult["error"],
+            "result": facialresult["result"]
+        }
+    else:
+        json_data = {
+            "status": "WAITING",
+            "error": None,
+            "result": None
+        }
+
+    print(currpath+token+".json")
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/":
@@ -208,6 +244,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 # Pass all parameters (if all of them are present) into modify_account so that we can do the back-end stuffs
                 # Is not really good cuz maybe there could be problems. Let's put that aside...
                 self.write_response(modify_account(username, passwd, newpass), content_type="text/plain; charset=utf-8")
+        elif self.path == "/getfacialresult":
+            token = self.headers.get("token")
+            if token:
+                self.write_response(get_facial_result(token), content_type="text/plain; charset=utf-8")
         else:
             parsed_path = urlparse(self.path)
             file_path = '.' + parsed_path.path
@@ -243,17 +283,39 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(content)
 
     def do_POST(self):
-        content_length = int(self.headers.get("content-length", 0))
-        body = self.rfile.read(content_length)
-
+        # Get the content length and read the body
+        content_length = int(self.headers.get('Content-Length', 0))
+        body = self.rfile.read(content_length).decode('utf-8')  # Decode to string
+        
+        # Ensure the received body is Base64-encoded image data
         try:
-            body_decoded = body.decode('utf-8')
-            print("Received POST data (UTF-8 decoded):", body_decoded)
-        except UnicodeDecodeError:
-            self.send_error(400, "Invalid UTF-8 encoding")
-            return
+            # Decode the Base64 data
+            image_data = base64.b64decode(body)
 
-        self.write_response(body, content_type="text/plain; charset=utf-8")
+            newtoken = generate_token()
+            # Save the decoded data as an image file
+            with open(f'faceserver_workspaces/queue/{newtoken}.jpg', 'wb') as f:
+                f.write(image_data)
+            print("Image received and saved as 'received_image.jpg'.")
+            # Send success response
+            response = {
+                'success': True,
+                'token': newtoken
+            }
+            self.write_response(json.dumps(response).encode('utf-8'), content_type="application/json")
+        
+        except (base64.binascii.Error, ValueError) as e:
+            # Handle errors in decoding
+            print("Failed to decode image data:", e)
+        self.send_error(400, "Invalid Base64 image data")
+
+    def write_response(self, data, content_type="text/plain"):
+        # Helper method to write a response
+        self.send_response(200)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def write_response(self, content, content_type="application/json"):
         self.send_response(200)

@@ -8,6 +8,10 @@ html, body {
     background-color: #f9f9f9;
 }
 
+button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .login_body{
     background-image: url("/ext/bg.jpg");
     background-position: center;
@@ -102,6 +106,21 @@ html, body {
     padding-bottom: 40px;
     padding-top: 40px;
 }
+
+.face_camera {
+    display: block;
+    width: 90%;   /* Ensures the video takes up the full width of its container */
+    height: auto;  /* Maintains aspect ratio */
+    margin: 0 auto;
+    border-radius: 20px;
+}
+
+canvas {
+    width: 90%;
+    height: auto;
+    display: none; /* Hide the fucking canvas */
+}
+
 /* END OF LOGIN SCREEN */
 
 /* ACCOUNTS */

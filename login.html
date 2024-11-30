@@ -12,29 +12,44 @@
         <!-- LOGIN UI SECTION -->
         <div id="login_section" class="login_container">
             <h1 class="centered">Đăng nhập</h1>
-            <h3 class="centered">Điền thông tin cá nhân của bạn</h3>
+            <div id="loginfield_section">
+                <h3 class="centered">Điền thông tin cá nhân của bạn</h3>
 
-            <form action="" class="login_form">
-                <label for="first">
-                    Username:
-                    <input type="text" id="first" name="first" 
-                    placeholder="Tên đăng nhập" required>
-                    <!-- <p>Điền tên đăng nhập của bạn</p> -->
-                </label>
-    
-                <label for="password">
-                    Password:
-                    <input type="password" id="password" name="password" 
-                    placeholder="Mật khẩu" required>
-                </label>
-            </form>
-            <p style="display: none;" id="alerto">Tên đăng nhập hoặc mật khẩu không đúng</p>
-            <div class="wrap">
-                <button type="button" onclick="submit()">
-                    Đăng nhập
-                </button> 
+                <form action="" class="login_form">
+                    <label for="first">
+                        Username:
+                        <input type="text" id="first" name="first" 
+                        placeholder="Tên đăng nhập" required>
+                        <!-- <p>Điền tên đăng nhập của bạn</p> -->
+                    </label>
+        
+                    <label for="password">
+                        Password:
+                        <input type="password" id="password" name="password" 
+                        placeholder="Mật khẩu" required>
+                    </label>
+                </form>
+                <p style="display: none;" id="alerto">Tên đăng nhập hoặc mật khẩu không đúng</p>
+            </div>
+
+            <div id="face_reg_section" style="display: none;">
+                <h3>Hãy hướng mặt vào camera</h3>
+                <video id="camera" class="face_camera" autoplay loop muted>
+                    <source src="">
+                </video>
+                <canvas id="canvas"></canvas>
+
+                <p style="display: none;" id="face_alerto"></p>
             </div>
             
+            <div class="wrap">
+                <button type="button" id="loginbutton" onclick="submit()">
+                    Đăng nhập
+                </button>
+                <button type="button" id="switchmodebutton" onclick="switchmode()">
+                    >
+                </button> 
+            </div>
         </div>
         <br>
         <br>
