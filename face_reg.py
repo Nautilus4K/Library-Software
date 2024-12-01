@@ -20,8 +20,17 @@ if not os.path.exists(FACE_DIR):
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
+def preprocess_frame(frame):
+    # Convert to grayscale
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # Apply Contrast Limited Adaptive Histogram Equalization (CLAHE)
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    equalized = clahe.apply(gray)
+    return equalized
+
 def detect_and_crop_face(frame):
     """Detect and crop the face area from the frame using Mediapipe."""
+    processed_frame = preprocess_frame(frame)
     with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5) as face_detection:
         results = face_detection.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         if results.detections:

@@ -14,26 +14,94 @@
                     <a href="/">
                         <img src="/favicon.ico" alt="Logo">
                     </a>
+                    <div class="site-name">
+                        <a href="/"><span>THCS Đoàn Thị Điểm</span></a>
+                    </div>
                 </div>
                 <div class="nav-menu">
-                    <a href="/index.html">📘 Thư viện</a>
-                    <a href="/search.html">🔍 Tìm kiếm</a>
+                    <a href="/index.html">📷 Quét QR</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="searchbarlink">📘 Tìm sách</a>
+                        <div class="dropdown-menu" id="dropdown_search">
+                            <a href="/search.html?query=Sách+giáo+khoa" id="submenus">📗 Sách giáo khoa</a>
+                            <a href="/search.html?query=Sách+tham+khảo" id="submenus">📙 Sách tham khảo</a>
+                            <a href="/search.html?query=Sách+truyện" id="submenus">📕 Sách truyện</a>
+                            <a href="/search.html">🔍 Tìm kiếm</a>
+                        </div>
+                    </div>
                     <a class="navbutton_userprofile" href="/accountsettings.html" id="user">Bạn</a>
                 </div>
             </nav>
         </header>
 
-        <br>
-        <br>
-        <h1 class="centered about_headers">Trường THCS Đoàn Thị Điểm</h1>
+        <!-- <br>
+        <br> -->
         <!-- <h3 class="centered"><i>Một ngôi trường nơi nhân tài nở rộ...</i></h3> -->
-        <p class="centered about_desc">
-            <strong>Địa chỉ:</strong><br><br> 25 Đặng Thái Thân<br><br><br>
-            <strong>Số điện thoại:</strong><br><br> 0262 3934 225<br><br><br>
-            <strong>E-mail:</strong><br><br> doanthidiembmt@gmail.com<br><br><br>
-        </p>
-        <br><br><br><br>
-        <img src="src/school_banner.jpg" class="centered_img" alt="Ảnh học sinh trong trường tham dự lễ Khai Giảng"> 
+        <!-- <br><br><br><br> -->
+        <!-- <img src="src/school_banner.jpg" class="centered_img" alt="Ảnh học sinh trong trường tham dự lễ Khai Giảng">  -->
+        <!-- FIRST SECTION: Some introducion, titles? -->
+        <div class="about_section1">
+            <h1>Trường THCS Đoàn Thị Điểm</h1>
+            <p>
+                Trường THCS Đoàn Thị Điểm, tọa lạc tại thành phố Buôn Ma Thuột, tỉnh Đắk Lắk, là một ngôi trường uy tín với bề dày thành tích trong giảng dạy và học tập. Trường chú trọng giáo dục toàn diện, kết hợp giữa kiến thức và kỹ năng sống, giúp học sinh phát triển cả về trí tuệ và nhân cách. Với đội ngũ giáo viên tâm huyết, cơ sở vật chất hiện đại, và nhiều hoạt động ngoại khóa phong phú, THCS Đoàn Thị Điểm không chỉ là nơi học tập mà còn là môi trường lý tưởng để các em rèn luyện, trưởng thành và chuẩn bị cho tương lai.
+            </p>
+            <div class="about_functionalitylisting">
+                <a href="https://www.facebook.com/thcsdtdbmt/">
+                    <strong>f </strong>acebook
+                </a>
+                <a href="#thuviensection">📚 Thư viện</a>
+                <a href="#news">📰 Tin tức</a>
+                <a href="#more_info">📞 Liên hệ</a>
+            </div>
+            <img src="/src/school_banner.jpg">
+        </div>
+        <div class="about_section2" id="thuviensection">
+            <h1>Thư viện THCS Đoàn Thị Điểm</h1>
+            <p>Trường THCS Đoàn Thị Điểm có một phần mềm thư viện hiện đại, cho phép học sinh và giáo viên dễ dàng tra cứu, quản lý và mượn trả sách nhanh chóng, góp phần nâng cao hiệu quả học tập và giảng dạy.</p>
+            <div class="about_functionalitylisting">
+                <a href="/index.html">📷 Quét mã QR</a>
+                <a href="/search.html" id="about_searchbookbutton">📘 Tìm tên sách</a>
+            </div>
+            <img src="/ext/bg2.png">
+        </div>
+        <h1 class="centered">Tin tức nổi bật</h1>
+        <div class="about_newsection" id="news">
+            <!-- <h1>Tin tức</h1> -->
+            <div class="about_mainnews">
+                <a target="_blank" href="https://www.facebook.com/share/p/z9q8t9JAxPaKDcdx/"><h1>Cuộc thi IOE cấp trường đã kết thúc</h1></a>
+                <p>Sau những giờ luyện tập chăm chỉ, cuộc thi IOE cấp trường đã kết thúc, để lại nhiều ấn tượng sâu sắc. Các bạn học sinh đã nỗ lực hết mình, không chỉ thể hiện kiến thức mà còn rèn luyện kỹ năng và sự tự tin. Cuộc thi là cơ hội để các em phát triển và học hỏi, đồng thời là động lực để tiếp tục cố gắng trong tương lai.</p>
+                <img src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/468879225_587359013679452_4952218053900751695_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=J-lQyLGI57oQ7kNvgHznozE&_nc_zt=23&_nc_ht=scontent.fsgn2-8.fna&_nc_gid=AdnqemIbLlJ9WR4dtvOarci&oh=00_AYB1e-a5JG1I08ebW-ifvR2yAJkYcScu-MAehVxlNXHrWA&oe=67520DF9">
+                <!-- <img src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/468858883_587359150346105_1221748895919386265_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=v7_WaT9KUf0Q7kNvgFw9qJU&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=AxwVqytO1J42n4YdSPkv0ZU&oh=00_AYDhuUdBJUjt1-4HxR_K6dXauKv-wpGEcO-B6SQnHaaKyA&oe=6751FB36">
+                <img src="https://scontent.fsgn2-10.fna.fbcdn.net/v/t39.30808-6/468606547_587359333679420_2296310593313403938_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_ohc=ZbrFMTDv-VEQ7kNvgGGgxhv&_nc_zt=23&_nc_ht=scontent.fsgn2-10.fna&_nc_gid=AXZP5nr4oqiUZA8iYRUV-2N&oh=00_AYAKITpp4wdIqtRLrHYs6XaSPIO5mJb1H5IvQpv-4YPG0Q&oe=67520062"> -->
+                <br>
+                <a target="_blank" class="link" href="https://www.facebook.com/share/p/z9q8t9JAxPaKDcdx/"><strong>[Bài đăng/Ảnh]</strong></a>
+            </div>
+            <div class="about_sidebar">
+                <div class="about_additionalnew">
+                    <a target="_blank" href="https://www.facebook.com/share/p/52mfMLuXV6AUhv2n/"><h2>Tuyên truyền về phòng chống bạo lực học đường và an toàn giao thông.</h2></a>
+                    <p>Ngày 14 tháng 10 năm 2024</p>
+                    <a target="_blank" class="link" href="https://www.facebook.com/share/p/52mfMLuXV6AUhv2n/"><strong>[Ảnh]</strong></a>
+                </div>
+                <div class="about_additionalnew">
+                    <a target="_blank" href="https://www.facebook.com/share/v/ooBgSnmNQMZseFpc/"><h2>Hội thi thiếu nhi tuyên truyền giới thiệu sách 2024</h2></a>
+                    <p>Ngày 6 tháng 10 năm 2024</p>
+                    <a target="_blank" class="link" href="https://www.facebook.com/share/v/ooBgSnmNQMZseFpc/"><strong>[Video]</strong></a>
+                </div>
+                <div class="about_additionalnew">
+                    <a target="_blank" href="https://www.facebook.com/share/v/rfFPNW7uKbrsyRBs/"><h2>Khai giảng năm học 2024 - 2025</h2></a>
+                    <p>Ngày 5 tháng 9 năm 2024</p>
+                    <a target="_blank" class="link" href="https://www.facebook.com/share/v/rfFPNW7uKbrsyRBs/"><strong>[Video]</strong></a>
+                </div>
+            </div>
+        </div>
+        <div class="about_section3">
+            <p class="centered about_desc" id="more_info">
+                <strong>Địa chỉ:</strong><br><br> 25 Đặng Thái Thân<br><br><br>
+                <strong>Số điện thoại:</strong><br><br> 0262 3934 225<br><br><br>
+                <strong>E-mail:</strong><br><br> doanthidiembmt@gmail.com<br><br><br>
+            </p>
+        </div>
+        
         <br><br><br><br>
         <p class="centered"><i>Sản phẩm trình bày Khoa Học Kỹ Thuật, chưa được đem tiến hành thực tế</i></p>
     

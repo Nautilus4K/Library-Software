@@ -12,6 +12,10 @@ import cgi
 import base64
 import random
 import string
+import time
+import sys
+import datetime
+import logging
 
 db_name = "data"
 
@@ -27,6 +31,30 @@ STATIC_DIR = './src'
 # SSL certificate and key paths (change these paths to your own certificate and key)
 CERT_FILE = "cert.pem"
 KEY_FILE = "private.key"
+
+# readable_time = datetime.datetime.fromtimestamp(int(time.time()))
+# Configure logging
+log_filename = f"serverOutput_{str(int(time.time()))}_Internals_v1.0.log"  # You can define a static log file name
+logging.basicConfig(
+    filename=log_filename,
+    level=logging.DEBUG,  # Adjust the level as needed
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+)
+
+class HyprOutput:
+    def write(self, message):
+        # Custom behavior: prepend time to every message
+        readable_time = datetime.datetime.fromtimestamp(int(time.time()))
+        # Log to the console (stdout)
+        if message != "\n":
+            sys.__stdout__.write(f"[{str(readable_time)}] {message}")
+        else: sys.__stdout__.write(message)
+        
+        # Log to the file using the logging module
+        logging.info(message)
+
+sys.stdout = HyprOutput()
 
 def get_code_data(code: str):
     print("Processing code: " + code)
@@ -68,7 +96,8 @@ def get_code_data(code: str):
 
 def get_search_data(idstr: str):
     # Perform the search with the updated function
-    valid_ids, detailed_results = search_books(cursor, idstr, 55)
+    print("Search:", idstr)
+    valid_ids, detailed_results = search_books(cursor, idstr, 40)
 
     # Initialize lists to store the results
     bktypes = []

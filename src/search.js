@@ -40,8 +40,8 @@ function search() {
             const newElement = document.createElement("a")
             // newElement.innerText = "(" + ranks[i] + "%)" + "["+valid_ids[i]+"] " + titles[i] + "\n"
             if (episodes[i] != 0)
-                newElement.innerText ="["+valid_ids[i]+"] " + titles[i] + " (Tập " + episodes[i] + ")" + "\n"
-            else newElement.innerText ="["+valid_ids[i]+"] " + titles[i] + "\n"
+                newElement.innerText =titles[i] + " (Tập " + episodes[i] + ")" + "\n"
+            else newElement.innerText =titles[i] + "\n"
             newElement.id = "result"
             newElement.href = "/idinfo.html?code="+valid_ids[i]
             newElement.style = "font-size: 20px; text-decoration: none; color: black; padding: 20px; text-align: center;"
@@ -65,6 +65,12 @@ const query = url.searchParams.get("query")
 if (query != null) {
     document.getElementById("searchbar").value = query
     search()
+}
+
+const username2 = getCookie("username")
+if (!username2) {
+    alert("Bạn cần đăng nhập để sử dụng tính năng này!")
+    window.location.href = "/"
 }
 
 document.addEventListener("keydown", key => {

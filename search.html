@@ -5,8 +5,8 @@
         <link rel="stylesheet" type="text/css" href="src/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- <script src="src/idLoader.js" defer></script> -->
-        <script src="/src/search.js" defer></script>
         <script src="/src/userManager.js" defer></script>
+        <script src="/src/search.js" defer></script>
     </head>
     <body>
         <header>
@@ -15,10 +15,21 @@
                     <a href="/">
                         <img src="/favicon.ico" alt="Logo">
                     </a>
+                    <div class="site-name">
+                        <a href="/"><span>THCS Đoàn Thị Điểm</span></a>
+                    </div>
                 </div>
                 <div class="nav-menu">
-                    <a href="/index.html">📘 Thư viện</a>
-                    <a href="/search.html">🔍 Tìm kiếm</a>
+                    <a href="/index.html">📷 Quét QR</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="searchbarlink">📘 Tìm sách</a>
+                        <div class="dropdown-menu" id="dropdown_search">
+                            <a href="/search.html?query=Sách+giáo+khoa" id="submenus">📗 Sách giáo khoa</a>
+                            <a href="/search.html?query=Sách+tham+khảo" id="submenus">📙 Sách tham khảo</a>
+                            <a href="/search.html?query=Sách+truyện" id="submenus">📕 Sách truyện</a>
+                            <a href="/search.html">🔍 Tìm kiếm</a>
+                        </div>
+                    </div>
                     <a class="navbutton_userprofile" href="/accountsettings.html" id="user">Bạn</a>
                 </div>
             </nav>

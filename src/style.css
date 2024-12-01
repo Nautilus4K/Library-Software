@@ -189,6 +189,180 @@ canvas {
 }
 /* END OF ACCOUNTS */
 
+.about_section1 {
+    padding: 10px 0;
+    position: relative; /* Ensures proper layering of child elements */
+    overflow: hidden; /* Prevents image overflow */
+    width: 100%;
+    height: auto; /* Set explicit height if needed */
+    z-index: 0;
+}
+
+.about_section1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Makes the image fill the section */
+    position: absolute; /* Allows the image to cover the container */
+    top: 0;
+    left: 0;
+    z-index: -1; /* Moves the image behind other content */
+    filter: brightness(0.5)
+}
+.about_section1 p {
+    text-align: center;
+    margin: 0 25%;
+    color: white;
+    padding-bottom: 40px;
+}
+
+.about_section1 h1 {
+    /* Header 1 */
+    color: rgb(255, 255, 255);;
+    text-align: center;
+}
+
+.about_functionalitylisting {
+    text-align: center;
+    justify-content: center;
+    color: white;
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap onto new lines */
+    gap: 10px; /* Adds space between buttons */
+}
+
+.about_functionalitylisting a {
+    padding: 13px;
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    min-width: 60px; /* Minimum width */
+    min-height: 20px; /* Minimum height */
+    text-decoration: none;
+    box-shadow: #000000 0px 0px 30px;
+    transform: translateY(0px);
+    transition: 0.2s;
+    white-space: nowrap; /* Prevents text wrapping within the button */
+}
+
+.about_functionalitylisting a:hover {
+    /* color: white; */
+    background-color: rgb(143, 255, 143);
+    transform: translateY(-10px);
+    box-shadow: #000000 0px 0px 40px;
+    /* height: 25px; */
+}
+
+.about_functionalitylisting a img {
+    width: 15px;
+    height: 15px;
+}
+
+.about_section2 {
+    padding: 10px 0;
+    position: relative; /* Ensures proper layering of child elements */
+    overflow: hidden; /* Prevents image overflow */
+    width: 100%;
+    height: auto; /* Set explicit height if needed */
+    z-index: 0;
+}
+
+.about_section2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Makes the image fill the section */
+    position: absolute; /* Allows the image to cover the container */
+    top: 0;
+    left: 0;
+    z-index: -1; /* Moves the image behind other content */
+    filter: brightness(0.5)
+}
+
+.about_section2 p {
+    text-align: center;
+    margin: 0 25%;
+    color: white;
+    padding-bottom: 40px;
+}
+
+.about_section2 h1 {
+    /* Header 1 */
+    color: white;
+    text-align: center;
+}
+
+/* NEWS SECTION LETS GOOOOO */
+.about_newsection {
+    display: flex; /* Use flexbox to create the layout */
+    gap: 20px; /* Space between columns */
+    width: 100%; /* Full width of the container */
+    padding: 16px 0;
+}
+
+.about_mainnews {
+    flex: 2; /* Takes up 2/3 of the space */
+    background: #f8f9fa; /* Light background for visibility */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.about_mainnews img {
+    height: 200px;
+    width: auto;
+    border-radius: 20px;
+    box-shadow: #0000006b 0 0 20px;
+    margin-right: 10px;
+}
+
+.about_mainnews h1 {
+    font-size: 2rem; /* Larger font for emphasis */
+    margin-bottom: 10px;
+    color: #333; /* Dark color for readability */
+}
+
+.about_mainnews a {
+    text-decoration: none;
+}
+
+.about_mainnews p {
+    font-size: 1.2rem; /* Slightly larger for main content */
+    line-height: 1.6;
+}
+
+.about_sidebar {
+    flex: 1; /* Takes up 1/3 of the space */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between news items */
+}
+
+.about_additionalnew {
+    background: #ffffff; /* Clean white background */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about_additionalnew:hover {
+    transform: translateX(-10px); /* Adds a hover effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+}
+
+.about_additionalnew h2 {
+    font-size: 1.2rem; /* Smaller than main news */
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.about_additionalnew p {
+    font-size: 1rem;
+    color: #777; /* Softer color for side content */
+    line-height: 1.4;
+}
+/* END OF NEWS SECTION */
+
 .about_headers {
     font-family: Georgia, 'Times New Roman', Times, serif; 
     font-size: 60px; 
@@ -197,8 +371,16 @@ canvas {
 }
 
 .about_desc {
-    line-height: 30px; 
-    font-size: 35px;
+    line-height: 12px; 
+    font-size: 20px;
+}
+
+.about_section3 {
+    padding: 10px 0;
+    background-image: url("/ext/bg3.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
 }
 
 .about_desc strong {
@@ -285,6 +467,25 @@ canvas {
     margin-left: 1rem;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-name {
+    font-size: 1.8rem; /* Adjust font size for visibility */
+    font-weight: bold; /* Make the name bold */
+    color: black; /* Match with other text elements */
+    margin-right: auto; /* Push name towards the left */
+    white-space: nowrap; /* Prevent the name from breaking into multiple lines */
+}
+
+.site-name a {
+    text-decoration: none;
+    color: black;
+}
+
 /* Navigation Menu */
 .nav-menu {
     display: flex;
@@ -313,10 +514,60 @@ canvas {
     font-weight: bold;
     padding: 15px 20px; /* Increased padding for bigger clickable area */
     border-radius: 5px; /* Consistent rounded corners */
+    margin-bottom: auto;
+    margin-top: auto;
 }
 
 .nav-menu a:hover {
     background-color: rgb(223, 251, 219);
+}
+
+/* Dropdown Menu Styling */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: black;
+    background-color: transparent;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* Positions dropdown below the parent menu item */
+    left: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    min-width: 200px; /* Ensures the menu is wide enough for content */
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    font-size: 1.2rem; /* Slightly smaller font size for dropdown links */
+    font-weight: normal;
+    border-radius: 5px;
+}
+
+.dropdown-menu a:hover {
+    background-color: rgb(223, 251, 219); /* Same hover color as the navbar links */
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
 /* End of navbar */
 
@@ -434,6 +685,12 @@ a.books_subheader:hover {
     }
 }
 
+@media (max-width: 1150px) {
+    .site-name {
+        display: none;
+    }
+}
+
 /* Compatibility for phones */
 @media (max-width: 750px) {
     .logo {
@@ -489,8 +746,8 @@ a.books_subheader:hover {
     }
     
     .about_desc {
-        line-height: 30px; 
-        font-size: 20px;
+        line-height: 12px; 
+        font-size: 15px;
     }
     
     .about_desc strong {
@@ -777,4 +1034,95 @@ a.books_subheader:hover {
     }
 
     /* IDINFO END */
+
+    /* ABOUT PAGE SECTIONS */
+    .about_section1 p {
+        text-align: center;
+        margin: 0 5%;
+        color: white;
+        padding-bottom: 40px;
+    }
+    .about_section2 p {
+        text-align: center;
+        margin: 0 5%;
+        color: white;
+        padding-bottom: 40px;
+    }
+    /* END OF ABOUT PAGE SECTIONS */
+
+    /* NEWS SECTION LETS GOOOOO */
+    .about_newsection {
+        display: block; /* Use flexbox to create the layout */
+        gap: 20px; /* Space between columns */
+        width: 100%; /* Full width of the container */
+        padding: 16px 0;
+    }
+
+    .about_mainnews {
+        display: block;
+        background: #f8f9fa; /* Light background for visibility */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+    .about_mainnews img {
+        height: 200px;
+        width: auto;
+        border-radius: 20px;
+        box-shadow: #0000006b 0 0 20px;
+        margin-right: 10px;
+    }
+
+    .about_mainnews h1 {
+        font-size: 2rem; /* Larger font for emphasis */
+        margin-bottom: 10px;
+        color: #333; /* Dark color for readability */
+    }
+
+    .about_mainnews a {
+        text-decoration: none;
+    }
+
+    .about_mainnews p {
+        font-size: 1.2rem; /* Slightly larger for main content */
+        line-height: 1.6;
+    }
+
+    .about_sidebar {
+        flex: 1; /* Takes up 1/3 of the space */
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Space between news items */
+    }
+
+    .about_additionalnew {
+        background: #ffffff; /* Clean white background */
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .about_additionalnew a {
+        text-decoration: none;
+    }
+
+    .about_additionalnew:hover {
+        transform: translateY(-10px); /* Adds a hover effect */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+    }
+
+    .about_additionalnew h2 {
+        font-size: 1.2rem; /* Smaller than main news */
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    .about_additionalnew p {
+        font-size: 1rem;
+        color: #777; /* Softer color for side content */
+        line-height: 1.4;
+    }
+    /* END OF NEWS SECTION */
 }

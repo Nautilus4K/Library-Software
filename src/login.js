@@ -21,6 +21,18 @@ function getCookie(cname) {
     return "";
 }
 
+function login(username) {
+    setCookie("username", username, 7)
+    const url = new URL(window.location.href)
+
+    const query = url.searchParams.get("next")
+
+    if (query != null) {
+        window.location.href = query
+    }
+    else window.location.href = "/"
+}
+
 function submit() {
     console.log("Checking supplied credentials");
 
@@ -53,8 +65,7 @@ function submit() {
         // In case the check has concluded that the credentials provided are invalid
         // we push out zhe alerto
         if (json["correct"]) {
-            setCookie("username", username, 7) // Let the user be logged in for 7 days before logged out
-            window.location.href = "/"
+            login(username) // Let the user be logged in for 7 days before logged out
         }
         else {
             document.getElementById("alerto").style.display = "block"
@@ -153,16 +164,15 @@ function switchmode() {
                         else if (json["result"] == null) {
                             sentImage = false; // Redo?
                             face_alert.style.display = "block"
-                            face_alert.textContent = "Hãy nhìn thẳng vào camera"
+                            face_alert.textContent = "Không có dữ liệu khuôn mặt!"
                         }
                         else {
                             // In this case, json["result"] already is a valid string.
                             // Because of that, it could only mean that there is a result.
                             // On top of that, its just how the server works behind the scenes
                             // => We make the user json["result"]!!!!
-
-                            setCookie("username", json["result"], 7) // Let the user be logged in for 7 days before logged out
-                            window.location.href = "/"
+                            
+                            login(json["result"]) // Let the user be logged in for 7 days before logged out
                         }
                     }
                 })
