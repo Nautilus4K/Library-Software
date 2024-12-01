@@ -43,7 +43,7 @@ if (username == "") {
     const newElement = document.createElement("a")
     newElement.textContent = "Bạn phải đăng nhập để sử dụng chức năng này!"
     document.getElementById("dropdown_search").appendChild(newElement)
-    document.getElementById("searchbarlink").href = ""
+    document.getElementById("searchbarlink").href = "#"
 }
 else {
     // Fetch information from the API calls. It should be working as intended

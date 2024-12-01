@@ -239,7 +239,7 @@ canvas {
     min-width: 60px; /* Minimum width */
     min-height: 20px; /* Minimum height */
     text-decoration: none;
-    box-shadow: #000000 0px 0px 30px;
+    box-shadow: #00000088 0px 0px 30px;
     transform: translateY(0px);
     transition: 0.2s;
     white-space: nowrap; /* Prevents text wrapping within the button */
@@ -249,7 +249,7 @@ canvas {
     /* color: white; */
     background-color: rgb(143, 255, 143);
     transform: translateY(-10px);
-    box-shadow: #000000 0px 0px 40px;
+    box-shadow: #000000cf 0px 0px 40px;
     /* height: 25px; */
 }
 
@@ -354,6 +354,10 @@ canvas {
     font-size: 1.2rem; /* Smaller than main news */
     margin-bottom: 8px;
     color: #555;
+}
+
+.about_additionalnew a {
+    text-decoration: none;
 }
 
 .about_additionalnew p {
@@ -1067,8 +1071,9 @@ a.books_subheader:hover {
     }
 
     .about_mainnews img {
-        height: 200px;
-        width: auto;
+        width: 90%;
+        margin: 0 auto;
+        height: auto;
         border-radius: 20px;
         box-shadow: #0000006b 0 0 20px;
         margin-right: 10px;

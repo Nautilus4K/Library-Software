@@ -1,3 +1,4 @@
 library/
 __pycache__/
 *.log
+logs/

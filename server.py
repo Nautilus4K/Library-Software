@@ -34,7 +34,15 @@ KEY_FILE = "private.key"
 
 # readable_time = datetime.datetime.fromtimestamp(int(time.time()))
 # Configure logging
-log_filename = f"serverOutput_{str(int(time.time()))}_Internals_v1.0.log"  # You can define a static log file name
+# Ensure the "logs" directory exists
+LOG_DIR = "logs"
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+# Define the log file path
+log_filename = os.path.join(LOG_DIR, f"serverOutput_{str(int(time.time()))}_Internals_v1.0.log")
+
+# Configure logging
 logging.basicConfig(
     filename=log_filename,
     level=logging.DEBUG,  # Adjust the level as needed
