@@ -29,17 +29,27 @@ def preprocess_frame(frame):
     return equalized
 
 def detect_and_crop_face(frame):
-    """Detect and crop the face area from the frame using Mediapipe."""
-    processed_frame = preprocess_frame(frame)
+    """Detect and crop the face area from the frame using Mediapipe and apply histogram equalization."""
+    # Preprocess the frame for better lighting normalization, but keep the original for cropping
+    processed_frame = preprocess_frame(frame)  # Apply CLAHE
+
     with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5) as face_detection:
-        results = face_detection.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        results = face_detection.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))  # Use the original frame here
         if results.detections:
             for detection in results.detections:
                 bboxC = detection.location_data.relative_bounding_box
-                ih, iw, _ = frame.shape
+                ih, iw, _ = frame.shape  # Use the original frame dimensions
                 x, y, w, h = int(bboxC.xmin * iw), int(bboxC.ymin * ih), int(bboxC.width * iw), int(bboxC.height * ih)
-                cropped_face = frame[y:y+h, x:x+w]
-                return cropped_face  # Return the cropped face
+                cropped_face = frame[y:y+h, x:x+w]  # Crop using the original frame
+
+                # Equalize the cropped face
+                cropped_face_equalized = cv2.cvtColor(cropped_face, cv2.COLOR_BGR2YCrCb)
+                channels = list(cv2.split(cropped_face_equalized))
+                channels[0] = cv2.equalizeHist(channels[0])  # Equalize the Y channel
+                cropped_face_equalized = cv2.merge(channels)
+                cropped_face_equalized = cv2.cvtColor(cropped_face_equalized, cv2.COLOR_YCrCb2BGR)
+
+                return cropped_face_equalized  # Return the equalized cropped face
     return None  # Return None if no face is detected
 
 def register_face():
