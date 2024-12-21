@@ -504,6 +504,7 @@ canvas {
     border-radius: 5px;
     padding: 15px 20px; /* Increased padding for bigger button */
     font-size: 1.5rem; /* Increased font size */
+    transition: .2s;
 }
 
 .navbutton_userprofile:hover {
@@ -520,6 +521,7 @@ canvas {
     border-radius: 5px; /* Consistent rounded corners */
     margin-bottom: auto;
     margin-top: auto;
+    transition: .2s;
 }
 
 .nav-menu a:hover {
@@ -544,15 +546,19 @@ canvas {
 }
 
 .dropdown-menu {
-    display: none;
+    display: block; /* Always keep it block for animation */
     position: absolute;
-    top: 100%; /* Positions dropdown below the parent menu item */
+    top: 90%; /* Start slightly above the final position */
     left: 0;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     min-width: 200px; /* Ensures the menu is wide enough for content */
     z-index: 1000;
+
+    opacity: 0; /* Start completely invisible */
+    transform: translateY(-10px); /* Float effect from above */
+    transition: transform 0.4s ease-out, opacity 0.4s ease; /* Smooth floating and fading */
 }
 
 .dropdown-menu a {
@@ -569,10 +575,14 @@ canvas {
     background-color: rgb(223, 251, 219); /* Same hover color as the navbar links */
 }
 
-/* Show dropdown on hover */
+/* Show dropdown on hover with float-down animation */
 .dropdown:hover .dropdown-menu {
-    display: block;
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Moves to its final position */
+    top: 100%; /* Adjusts back to normal position */
 }
+
+
 /* End of navbar */
 
 .searchbar {
@@ -641,20 +651,12 @@ canvas {
     font-size: 30px;
     margin-left: 50px;
     margin-right: auto;
-    transition:cubic-bezier(0.165, 0.84, 0.44, 1) .3s;
 }
 
-.books_subheader:hover {
-    text-indent: 30px;
-}
 
 a.books_subheader {
     color: inherit; /* Inherits color from .books_subheader */
     text-decoration: none; /* Removes underline */
-}
-
-a.books_subheader:hover {
-    text-indent: 30px; /* Match hover behavior with p.books_subheader */
 }
 
 .link {

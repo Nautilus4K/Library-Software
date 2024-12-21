@@ -34,13 +34,18 @@ def preprocess_frame(frame):
     return equalized
 
 def detect_and_crop_face(frame):
-    """Detect and crop a face from the frame, applying histogram equalization."""
-    # Preprocess the frame for better lighting normalization
-    preprocessed_frame = preprocess_frame(frame)  # Preprocessed frame is used for display or enhancement
+    """Detect and crop the face area from the frame using Mediapipe and apply histogram equalization."""
+    # Check for an empty frame
+    if frame is None or frame.size == 0:
+        print("Error: Empty frame received")
+        return None
 
-    # Mediapipe detection works on the original frame
-    with mp_face_detection.FaceDetection(min_detection_confidence=0.7) as face_detection:
-        results = face_detection.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))  # Use original frame here
+    # Preprocess the frame for better lighting normalization, but keep the original for cropping
+    processed_frame = preprocess_frame(frame)  # Apply CLAHE or other enhancements
+
+    with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5) as face_detection:
+        # Use the original frame for Mediapipe detection
+        results = face_detection.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         if results.detections:
             for detection in results.detections:
                 bboxC = detection.location_data.relative_bounding_box
@@ -51,17 +56,26 @@ def detect_and_crop_face(frame):
                     int(bboxC.width * iw),
                     int(bboxC.height * ih),
                 )
-                cropped_face = frame[y:y + h, x:x + w]  # Crop the original frame
 
-                # Apply histogram equalization to the cropped face
-                cropped_face_equalized = cv2.cvtColor(cropped_face, cv2.COLOR_BGR2YCrCb)
-                channels = list(cv2.split(cropped_face_equalized))
-                channels[0] = cv2.equalizeHist(channels[0])  # Equalize the Y channel
-                cropped_face_equalized = cv2.merge(channels)
-                cropped_face_equalized = cv2.cvtColor(cropped_face_equalized, cv2.COLOR_YCrCb2BGR)
+                # Ensure valid bounding box dimensions
+                if h > 0 and w > 0:
+                    cropped_face = frame[y:y + h, x:x + w]
 
-                return cropped_face_equalized  # Return the equalized cropped face
+                    # Apply histogram equalization to the cropped face
+                    cropped_face_equalized = cv2.cvtColor(cropped_face, cv2.COLOR_BGR2YCrCb)
+                    channels = list(cv2.split(cropped_face_equalized))
+                    channels[0] = cv2.equalizeHist(channels[0])  # Equalize the Y channel
+                    cropped_face_equalized = cv2.merge(channels)
+                    cropped_face_equalized = cv2.cvtColor(cropped_face_equalized, cv2.COLOR_YCrCb2BGR)
+
+                    return cropped_face_equalized  # Return the equalized cropped face
+                else:
+                    print("Error: Invalid face bounding box dimensions")
+        else:
+            print("No face detected in the frame")
+
     return None  # Return None if no face is detected
+
 
 def check_face(image_path):
     """
@@ -89,7 +103,7 @@ def check_face(image_path):
                             face, file_path, enforce_detection=False
                         )
                         distance = result.get("distance", 1)  # Default to 1 if no distance is returned
-                        similarity_threshold = 0.34
+                        similarity_threshold = 0.7
                         if result["verified"] and distance <= similarity_threshold:
                             matches.append(file_name.split(".")[0])  # File name without extension
                     except Exception as e:

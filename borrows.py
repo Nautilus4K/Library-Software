@@ -63,6 +63,10 @@ if (nid != ""):
         VALUES (?, ?, ?, ?)
     ''', data)
 
+remove = str(input("Enter id of book you want to reregister as not borrowed anymore (BLANK IF IGNORE): "))
+if remove != "":
+    cursor.execute("DELETE FROM borrows WHERE id=?", (remove,))
+
 # Commit the transaction and close the connection
 db.commit()
 
