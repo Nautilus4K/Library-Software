@@ -1,7 +1,7 @@
 from os import system as cmd
 try: 
     from fuzzywuzzy import fuzz
-except ImportError:
+except:
     cmd("pip install fuzzywuzzy")
     from fuzzywuzzy import fuzz
 import unicodedata

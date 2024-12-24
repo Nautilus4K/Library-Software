@@ -62,8 +62,6 @@ class HyprOutput:
         # Log to the file using the logging module
         logging.info(message)
 
-sys.stdout = HyprOutput()
-
 def get_code_data(code: str):
     print("Processing code: " + code)
     try:
