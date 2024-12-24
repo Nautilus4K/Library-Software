@@ -32,12 +32,24 @@
                         </div>
                     </div>
                     <a class="navbutton_userprofile" href="/accountsettings.html" id="user">Bạn</a>
+
+                    <!-- Popup Modal -->
+                    <div class="popup hidden">
+                        <div class="popup-content">
+                            <h3 class="popup-title">Bạn có chắc chắn về lựa chọn này hay không?</h3>
+                            <p class="popup-message">Bạn có chắc chắn muốn mượn cuốn sách này hay không? Bạn chỉ có thể đánh dấu trả sách qua thủ thư của thư viện.</p>
+                            <div class="popup-actions">
+                                <button class="btn cancel-trigger">Huỷ</button>
+                                <button class="btn confirm-trigger confirm-action">Tiếp tục</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </header>
 
         <br><br>
-
+<!--NVQUANGVINH LAM CAI NAY CHO KHKT. LAM ON DUNG COPYPASTA HET DAM NAY ROI BAO LA CUA MINH-->
         <h1 class="centered" id="codeDisplay">Mã sách: </h1>
         <br>
         <!--inline information view-->
@@ -56,7 +68,10 @@
                     <p class="books_subheader"><strong>Mô tả: </strong> <br><a id="desc">...</a></p>
                 </div>
             </div>   
-
+            <div class="idinfo_buttons_container" id="borrow">
+                <p id="messageNotify">Placeholder MSG</p>
+                <button type="button" class="idinfo_button" onclick="borrow_book()">Mượn sách</button>
+            </div>
             <br>
         </div>
         <br>

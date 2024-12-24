@@ -675,6 +675,132 @@ a.books_subheader {
     color: blue;
 }
 
+.idinfo_buttons_container {
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.idinfo_button {
+    padding: 20px;
+    border: 0;
+    border-radius: 15px;
+    color: #1186b8;
+    background-color: #eee;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: large;
+    font-weight: bold;
+    border: 4px solid transparent;
+    transition: .2s;
+}
+
+.idinfo_button:hover {
+    cursor: pointer;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: #1186b8;
+    color: white;
+    border: 4px solid #00ffff;
+}
+
+.idinfo_buttons_container p {
+    color: red;
+    font-style: oblique;
+}
+
+.btn {
+    padding: 20px;
+    border: 0;
+    border-radius: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    transition: .2s;
+}
+
+.btn:hover {
+    cursor: pointer;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.btn.confirm-trigger {
+    color: #28a745;
+    background-color: rgb(231, 231, 231);
+}
+
+.btn.confirm-trigger:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn.cancel-trigger {
+    color: #dc3545;
+    background-color: rgb(231, 231, 231);
+}
+
+.btn.cancel-trigger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Popup Styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: .2s;
+    opacity: 0; /* Start with the popup hidden */
+    animation: fadeIn 0.5s forwards; /* Apply fade-in animation */
+}
+
+/* Keyframes for fade-in effect */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.popup.hidden {
+    display: none; /* Hide popup by default */
+    animation: none; /* Remove animation when hidden */
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+.popup-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.popup-message {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.popup-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 /* IDINFO END */
 
 .text-content {

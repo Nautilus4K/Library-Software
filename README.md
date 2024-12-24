@@ -2,7 +2,7 @@
   Vietnamese Library software, built with SQLite, Python, HTML, CSS and Javascript. This is a project I made for a try at the scientific and technical competition in Dak Lak Province, Viet Nam.
 
 ## Starting the webserver
-#### 1. Default HTTPD webserver (Designed for instant port open)
+#### 1. Default HTTPD webserver (Designed for instant port open, deprecated, all further changes will be made in the WSGI version)
 
   To start the web server, open the python script `server.py` to run it up. Port 443 is default (for HTTPS connections), change if necessary. To change IP and port on launch as launch arguments, refer to this example of opening webserver on 0.0.0.0 port 443:
   ```bash

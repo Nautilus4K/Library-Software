@@ -16,6 +16,7 @@ import string
 import sys
 import subprocess
 from multiprocessing import Process
+import time
 
 db_name = "data"
 
@@ -35,19 +36,24 @@ def get_code_data(code: str):
         result = cursor.fetchone()
         cursor.execute('SELECT * FROM books WHERE id=?', (result[1],))
         result2 = cursor.fetchone()
-    except TypeError:
+    except Exception as e:
         result = ('null', 'null', 'null', 'null', 'null')
         result2 = ('null', 'null', 'null', 'null', 'null', 'null')
-    except:
-        result = ('null', 'null', 'null', 'null', 'null')
-        result2 = ('null', 'null', 'null', 'null', 'null', 'null')
+        print("Error in get_code_data() result1/2: "+str(e))
 
     try:
         cursor.execute('SELECT * FROM borrows WHERE id=?', (code,))
         result3 = cursor.fetchone()
         result3[1]
-    except:
+    except Exception as e:
         result3 = ('0', '0', 0, 0)
+        print("Error in get_code_data() result3: "+str(e))
+
+    try:
+        cursor.execute('SELECT name FROM users WHERE username=?', (result3[1],))
+        borrowername = cursor.fetchone()[0]
+    except Exception as e:
+        borrowername = result3[1]
 
     json_data = {
         "id": result[0],
@@ -60,7 +66,7 @@ def get_code_data(code: str):
         "year_published": result2[3],
         "description": result2[4],
         "use": result2[5],
-        "borrower": result3[1],
+        "borrower": borrowername,
         "borrow_date": result3[2],
         "borrow_expire": result3[3]
     }
@@ -203,6 +209,31 @@ def get_facial_result(token: str):
     # print(currpath+token+".json")
     return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
 
+def borrow_book(code: str, username: str):
+    json_data = {}
+    print("Now borrowing book: "+code)
+    current_time = int(time.time())  # Get current Unix timestamp
+    expire_time = current_time + 7 * 24 * 60 * 60  # Borrow period of 7 days from now
+    data = (code, username, current_time, expire_time)
+
+    # Insert data into the table
+    try:
+        cursor.execute('''
+            INSERT OR IGNORE INTO  borrows (id, current_borrower, borrow_day, borrow_expire)
+            VALUES (?, ?, ?, ?)
+        ''', data)
+        json_data = {
+            "success": True
+        }
+    except Exception as e:
+        print("Error inserting data into database: ", e)
+        json_data = {
+            "success": False
+        }
+
+    db.commit()
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')    
+
 def run_facial_reg():
     # Run facial recognition server. Which will be used to get facial recoginition functionality inside of log in page.
     print("Execution facial recoginition script...")
@@ -317,6 +348,17 @@ def application(environ, start_response):
             else:
                 # If not all data exists, then we return bad request
                 print("Bad request in /getfacialresult")
+                start_response('400 Bad Request', headers)
+                return [json.dumps({"error": "Missing headers for connection", "headers": headers_dict}).encode('utf-8')]
+            
+        elif path == "/borrowbook":
+            # Borrow books from the library through API calls
+            if 'Code' in headers_dict and 'Username' in headers_dict:
+                # If code exists, then we mark the book as borrowed then returns if the process completed successfully or no.
+                start_response('200 OK', headers)
+                return [b''+borrow_book(headers_dict["Code"], headers_dict["Username"])]
+            else:
+                # If not all data exists, then we return bad request
                 start_response('400 Bad Request', headers)
                 return [json.dumps({"error": "Missing headers for connection", "headers": headers_dict}).encode('utf-8')]
 

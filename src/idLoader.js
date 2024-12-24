@@ -26,6 +26,22 @@ function convertTimestamp(timestamp) {
   return `${dayOfWeek}, ${day}-${month}-${year}`;
 }
 
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 fetch("/get", {
     method: "GET",
     headers: {
@@ -57,6 +73,8 @@ fetch("/get", {
     borrowexpireEl = document.getElementById("borrowexpire")
 
     borrowerEl.textContent = json["borrower"]
+
+    document.getElementById("borrow").remove()
 
     const curTime = Math.floor(Date.now() / 1000);
     if (curTime > json["borrow_expire"]) {
@@ -91,3 +109,51 @@ fetch("/get", {
 
   img.src = "/book_thumbnails/" + json["type"] + "_" + json["episode"] + ".jpg"
 });
+
+if ((getCookie("username") == "" || !getCookie("username")) && document.getElementById("borrow")) {
+  document.getElementById("borrow").remove()
+}
+document.getElementById("messageNotify").style.display = "none"
+
+function borrow_book() {
+  // Get elements
+  const popup = document.querySelector('.popup'); // Popup modal
+  const cancelTrigger = document.querySelector('.cancel-trigger'); // Cancel button
+  const confirmAction = document.querySelector('.confirm-action'); // Confirm button
+
+  // Show the popup
+  popup.classList.remove('hidden');
+
+  // Handle "Cancel" button click
+  cancelTrigger.addEventListener('click', () => {
+      popup.classList.add('hidden'); // Hide popup
+  });
+
+  // Handle "Confirm" button click
+  confirmAction.addEventListener('click', () => {
+      popup.classList.add('hidden'); // Hide popup
+      borrow_book_after_confirm()
+  });
+}
+
+function borrow_book_after_confirm() {
+  fetch("/borrowbook", {
+    method: "GET",
+    headers: {
+        "Code": code,
+        "Username": getCookie("username")
+    }
+  })
+  .then((response) => response.json())
+  .then((json) => {
+    console.log(json)
+    if (json["success"]) {
+      // If borrow successful
+      window.location.href = window.location.href // Refresh page
+    }
+    else {
+      document.getElementById("messageNotify").style.display = "block"
+      document.getElementById("messageNotify").textContent = "Đã có lỗi xảy ra, vui lòng thử lại sau."
+    }
+  })
+}
