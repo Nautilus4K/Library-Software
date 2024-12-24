@@ -305,6 +305,14 @@ canvas {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid transparent; /* Initial transparent border */
+    transition: 0.2s ease;
+}
+
+.about_mainnews:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+    border: 1px solid #1180b8; /* Visible border on hover */
+    transform: translateX(+10px); /* Adds a hover effect */
 }
 
 .about_mainnews img {
@@ -342,12 +350,14 @@ canvas {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease; /* Include border transition */
+    border: 1px solid transparent; /* Initial transparent border */
 }
 
 .about_additionalnew:hover {
     transform: translateX(-10px); /* Adds a hover effect */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+    border: 1px solid #1180b8; /* Visible border on hover */
 }
 
 .about_additionalnew h2 {
@@ -546,9 +556,9 @@ canvas {
 }
 
 .dropdown-menu {
-    display: block; /* Always keep it block for animation */
+    display: none; /* Keep it hidden by default */
     position: absolute;
-    top: 90%; /* Start slightly above the final position */
+    top: 100%; /* Normal position below the button */
     left: 0;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -575,13 +585,12 @@ canvas {
     background-color: rgb(223, 251, 219); /* Same hover color as the navbar links */
 }
 
-/* Show dropdown on hover with float-down animation */
+/* Show dropdown when hovering over either the button or the menu */
 .dropdown:hover .dropdown-menu {
+    display: block; /* Show dropdown */
     opacity: 1; /* Fully visible */
     transform: translateY(0); /* Moves to its final position */
-    top: 100%; /* Adjusts back to normal position */
 }
-
 
 /* End of navbar */
 
@@ -1019,9 +1028,9 @@ a.books_subheader {
         transition:cubic-bezier(0.165, 0.84, 0.44, 1) .3s;
     }
 
-    .books_subheader:hover {
+    /* .books_subheader:hover {
         text-indent: 30px;
-    }
+    } */
 
     a.books_subheader {
         color: inherit; /* Inherits color from .books_subheader */
@@ -1072,6 +1081,12 @@ a.books_subheader {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     }
 
+    .about_mainnews:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+        border: 1px solid #1180b8; /* Visible border on hover */
+        transform: translateY(-10px); /* Adds a hover effect */
+    }
+
     .about_mainnews img {
         width: 90%;
         margin: 0 auto;
@@ -1108,7 +1123,8 @@ a.books_subheader {
         padding: 15px;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid transparent; /* Initial transparent border */
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease; /* Smooth transitions */
     }
 
     .about_additionalnew a {
@@ -1118,6 +1134,7 @@ a.books_subheader {
     .about_additionalnew:hover {
         transform: translateY(-10px); /* Adds a hover effect */
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+        border: 1px solid #1180b8; /* Visible border on hover */
     }
 
     .about_additionalnew h2 {
