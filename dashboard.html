@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Thư viện Trường Trung Học Cơ Sở Đoàn Thị Điểm</title>
+        <link rel="stylesheet" type="text/css" href="src/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="/src/chart.js"></script>
+        <script src="/src/userManager.js" defer></script>
+        <script src="/src/dashboard.js" defer></script>
+    
+        <!-- Them thu vien doc QR jsQR -->
+        <script src="src/jsQR.js"></script>
+        <!-- <script src="/src/qrLoader.js"></script> -->
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/favicon.ico" alt="Logo">
+                    </a>
+                    <div class="site-name">
+                        <a href="/"><span>THCS Đoàn Thị Điểm</span></a>
+                    </div>
+                </div>
+                <div class="nav-menu">
+                    <a href="/index.html">📷 Quét QR</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="searchbarlink">📚 Tìm sách</a>
+                        <div class="dropdown-menu" id="dropdown_search">
+                            <a href="/search.html?query=Sách+giáo+khoa" id="submenus">📗 Sách giáo khoa</a>
+                            <a href="/search.html?query=Sách+tham+khảo" id="submenus">📙 Sách tham khảo</a>
+                            <a href="/search.html?query=Sách+truyện" id="submenus">📕 Sách truyện</a>
+                            <a href="/search.html?query=Sách+Bài+Tập" id="submenus">📘 Sách bài tập</a>
+                            <a href="/search.html">🔍 Tìm kiếm</a>
+                        </div>
+                    </div>
+                    <a class="navbutton_userprofile" href="/accountsettings.html" id="user">Bạn</a>
+                </div>
+            </nav>
+        </header>
+
+        <br><br>
+        <div class="info-panel-container">
+            <!-- INFO PANELS -->
+            <div class="info-panel" id="info-panel1">
+                <canvas id="chart1" width="400" height="400"></canvas>
+            </div>
+            <div class="feature-panel" id="info-panel2">
+                <h2>Các chức năng</h2>
+                <br>
+                <a href="/misc/written.xlsx" target="_blank"><img src="/ext/excel.png" width="22" height="20">  Nhật ký truy cập</a>
+                <br><br><br>
+                <a href="#addbook"><strong>+</strong> Thêm sách mới</a>
+                <br><br><br>
+                <a href="#addid"><strong>+</strong> Thêm sách đồng dạng</a>
+                <br><br><br>
+                <a href="#deleteborrow"><strong>-</strong> Trả sách</a>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="addbook-container" id="addbook">
+            <h1 class="centered">Thêm sách mới</h1>
+            <div class="form-group">
+                <label for="book-id">Mã sách: </label>
+                <input type="text" id="book-id" placeholder="Tên ngắn gọn, VD: Toan8KNTT, Toan8CBNC, ...">
+            </div>
+            <div class="form-group">
+                <label for="book-title">Tiêu đề:</label>
+                <input type="text" id="book-title" placeholder="Nhập tiêu đề sách">
+            </div>
+            <div class="form-group">
+                <label for="book-publisher">Nhà xuất bản:</label>
+                <input type="text" id="book-publisher" placeholder="Nhập nhà xuất bản">
+            </div>
+            <div class="form-group">
+                <label for="book-year">Năm xuất bản:</label>
+                <input type="number" id="book-year" placeholder="Nhập năm xuất bản">
+            </div>
+            <div class="form-group">
+                <label for="book-description">Mô tả:</label>
+                <textarea id="book-description" placeholder="Nhập mô tả sách"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="book-type">Loại sách:</label>
+                <select id="book-type">
+                    <option value="Sách Giáo Khoa">Sách Giáo Khoa</option>
+                    <option value="Sách Tham Khảo">Sách Tham Khảo</option>
+                    <option value="Sách Bài Tập">Sách Bài Tập</option>
+                    <option value="Sách Truyện">Sách Truyện</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="book-ep">Tập:</label>
+                <input type="number" id="book-ep" placeholder="Nhập tập">
+            </div>
+            <div class="form-group">
+                <label for="book-thumbnail">Ảnh bìa sách:</label>
+                <input type="file" id="book-thumbnail" accept="image/jpeg">
+            </div>
+            <div class="form-group">
+                <button type="button" id="add-book-btn" onclick="add_book()">Thêm sách</button>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="addbook-container" id="addid">
+            <h1 class="centered">Thêm sách đồng dạng</h1>
+            <div class="form-group">
+                <label for="book-id">Mã sách: </label>
+                <input type="text" id="book-id2" placeholder="Tên ngắn gọn, VD: Toan8KNTT, Toan8CBNC, ...">
+            </div>
+            <div class="form-group">
+                <label for="book-ep">Tập:</label>
+                <input type="number" id="book-ep2" placeholder="Nhập tập">
+            </div>
+            <div class="form-group">
+                <label for="book-thumbnail">Ảnh bìa sách (Nếu chưa có tập này trong hệ thống):</label><br>
+                <input type="file" id="book-thumbnail2" accept="image/jpeg">
+            </div>
+            <div class="form-group">
+                <button type="button" id="add-book-btn" onclick="add_id()">Thêm sách</button>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="addbook-container" id="deleteborrow">
+            <h1 class="centered">Trả sách</h1>
+            <div class="form-group">
+                <label for="book-id">Mã định danh sách: </label>
+                <input type="text" id="book-code" placeholder="VD: GGZBBJ0j1aF, KttcMNpbGNg, ...">
+            </div>
+            <div class="form-group">
+                <button type="button" id="add-book-btn" onclick="del_borrow()">Trả sách</button>
+            </div>
+        </div>
+        <br>
+        <br>
+        <p class="centered"><i>Sản phẩm trình bày Khoa Học Kỹ Thuật. Được thiết kế bởi nhóm học sinh lớp 8H.<br>
+            Nguyễn Văn Quang Vinh; Phạm Phương Chi<br>
+            Dưới sự hướng dẫn của các giáo viên:<br>
+            Từ Thị Việt Hà; Nguyễn Thị Loan</i></p>
+    </body>
+</html>

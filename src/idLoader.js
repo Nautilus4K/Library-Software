@@ -96,6 +96,7 @@ fetch("/get", {
   const descEl = document.getElementById("desc")
   const episodeEl = document.getElementById("episode")
   const img = document.getElementById("img")
+  const type = document.getElementById("type")
 
   nameEl.textContent = json["title"];
   nameEl.href = "/search.html?query=" + json["title"].replace(/\s+/g, "+");
@@ -108,6 +109,28 @@ fetch("/get", {
   descEl.textContent = json["description"]
 
   img.src = "/book_thumbnails/" + json["type"] + "_" + json["episode"] + ".jpg"
+
+  if (getCookie("username") == "admin") type.textContent = json["type"]
+  else {
+    type.remove()
+    document.getElementById("booktype").remove()
+  }
+
+  var usernamex = getCookie("username")
+  if (!usernamex) {
+      usernamex = null
+  }
+  fetch("/journal", {
+    method: "GET",
+    headers: {
+        "Username": usernamex,
+        "Action": "Xem thong tin sach: " + code
+    }
+  })
+  .then((response) => response.json())
+  .then((json) => {
+      console.log(json);
+  })
 });
 
 if ((getCookie("username") == "" || !getCookie("username")) && document.getElementById("borrow")) {
@@ -149,6 +172,21 @@ function borrow_book_after_confirm() {
     console.log(json)
     if (json["success"]) {
       // If borrow successful
+      var usernamex = getCookie("username")
+      if (!usernamex) {
+          usernamex = null
+      }
+      fetch("/journal", {
+        method: "GET",
+        headers: {
+            "Username": usernamex,
+            "Action": "Muon sach: " + code
+        }
+      })
+      .then((response) => response.json())
+      .then((json) => {
+          console.log(json);
+      })
       window.location.href = window.location.href // Refresh page
     }
     else {

@@ -1,0 +1,7 @@
+fuzzywuzzy
+mediapipe 
+deepface 
+opencv-python-headless 
+tensorflow
+tf-keras
+openpyxl

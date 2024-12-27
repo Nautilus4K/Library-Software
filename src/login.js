@@ -22,6 +22,22 @@ function getCookie(cname) {
 }
 
 function login(username) {
+    var username1 = getCookie("username")
+    if (!username1) {
+        username1 = null
+    }
+    fetch("/journal", {
+        method: "GET",
+        headers: {
+            "Username": username1,
+            "Action": "Dang nhap tai khoan: " + username
+        }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        console.log(json);
+    })
+
     setCookie("username", username, 7)
     const url = new URL(window.location.href)
 

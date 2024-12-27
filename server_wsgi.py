@@ -8,6 +8,8 @@ import mimetypes
 import sqlite3
 from urllib.parse import parse_qs, urlparse
 import json
+import datetime
+import openpyxl.styles
 from search import search_books, normalize_unicode, all_books
 from hashlib import sha256
 import base64
@@ -17,6 +19,7 @@ import sys
 import subprocess
 from multiprocessing import Process
 import time
+import openpyxl
 
 db_name = "data"
 
@@ -239,16 +242,321 @@ def run_facial_reg():
     print("Execution facial recoginition script...")
     subprocess.run(['python', 'face_server.py'])
 
-def application(environ, start_response):
+global row
+def save_to_excel(ip_address: str, username: str, name: str, time_act: str, action: str):
+    row = 3
+    # Define a thin border
+    thin_border = openpyxl.styles.Border(
+        left=openpyxl.styles.Side(style='thin'),
+        right=openpyxl.styles.Side(style='thin'),
+        top=openpyxl.styles.Side(style='thin'),
+        bottom=openpyxl.styles.Side(style='thin')
+    )
+    if os.path.exists("misc/written.xlsx"):
+        workbook = openpyxl.load_workbook("misc/written.xlsx")
+        sheet = workbook.active
+        workbook.save("misc/written.xlsx")
 
+        if row == 3:
+            # Continually find until found a blank row
+            while True:
+                cell_value = sheet[f"A{row}"].value  # Get the value of the current cell in column A
+                if cell_value is None:  # Check if the cell is empty
+                    break  # Stop the loop if the cell is blank
+                
+                row += 1  # Move to the next row (A4, A5, etc.)
+    else:
+
+        # Create a new workbook and add a worksheet
+        if not os.path.exists("misc"): os.makedirs("misc")
+        workbook = openpyxl.Workbook()  # Create a new workbook
+        sheet = workbook.active  # Get the active sheet
+        sheet.title = "LogSheet"  # Rename the sheet (optional)
+
+        # Preparation
+        sheet["A1"] = "Nhật ký kết nối thư viện"
+        sheet["A1"].font = openpyxl.styles.Font(name="Times New Roman", size=18, bold=True)
+
+        # Now title rows, which stands for itself as one of the best rows in the entire workbook
+        sheet["A2"] = "IP"
+        sheet["A2"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=True, color="000000")
+        sheet["A2"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+        sheet["A2"].fill = openpyxl.styles.PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+        sheet["A2"].border = thin_border
+
+        sheet["B2"] = "Định danh"
+        sheet["B2"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=True, color="000000")
+        sheet["B2"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+        sheet["B2"].fill = openpyxl.styles.PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+        sheet["B2"].border = thin_border
+
+        sheet["C2"] = "Tên người dùng"
+        sheet["C2"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=True, color="000000")
+        sheet["C2"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+        sheet["C2"].fill = openpyxl.styles.PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+        sheet["C2"].border = thin_border
+
+        sheet["D2"] = "Thời gian"
+        sheet["D2"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=True, color="000000")
+        sheet["D2"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+        sheet["D2"].fill = openpyxl.styles.PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+        sheet["D2"].border = thin_border
+
+        sheet["E2"] = "Action"
+        sheet["E2"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=True, color="000000")
+        sheet["E2"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+        sheet["E2"].fill = openpyxl.styles.PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+        sheet["E2"].border = thin_border
+
+        sheet.column_dimensions['A'].width = 16
+        sheet.column_dimensions['B'].width = 12
+        sheet.column_dimensions['C'].width = 25
+        sheet.column_dimensions['D'].width = 20
+        sheet.column_dimensions['E'].width = 70
+
+        workbook.save("misc/written.xlsx")
+
+    # Now we actually add informations into the EXCEL file.
+
+    sheet[f"A{row}"] = ip_address
+    sheet[f"A{row}"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=True, color="000000")
+    sheet[f"A{row}"].border = thin_border
+    sheet[f"A{row}"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+    sheet[f"A{row}"].fill = openpyxl.styles.PatternFill(start_color="88FFAA", end_color="88FFAA", fill_type="solid")
+
+    sheet[f"B{row}"] = username
+    sheet[f"B{row}"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=False, color="000000")
+    sheet[f"B{row}"].border = thin_border
+    sheet[f"B{row}"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+
+    sheet[f"C{row}"] = name
+    sheet[f"C{row}"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=False, color="000000")
+    sheet[f"C{row}"].border = thin_border
+    sheet[f"C{row}"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+
+    if username == "null": 
+        sheet[f"B{row}"].fill = openpyxl.styles.PatternFill(start_color="FF4242", end_color="FF4242", fill_type="solid")
+        sheet[f"C{row}"].fill = openpyxl.styles.PatternFill(start_color="FF4242", end_color="FF4242", fill_type="solid")
+
+    sheet[f"D{row}"] = time_act
+    sheet[f"D{row}"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=False, color="000000")
+    sheet[f"D{row}"].border = thin_border
+    sheet[f"D{row}"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+
+    sheet[f"E{row}"] = action
+    sheet[f"E{row}"].font = openpyxl.styles.Font(name="Times New Roman", size=11, bold=False, color="000000")
+    sheet[f"E{row}"].border = thin_border
+    sheet[f"E{row}"].alignment = openpyxl.styles.Alignment(wrap_text=True, horizontal="center", vertical="center")
+
+    workbook.save("misc/written.xlsx")
+
+    row += 1 # Saving this row for caching.
+
+def log_activity(ip_address: str ,username: str, action: str):
+    # This function is used to log the activity of the user.
+    # It will save the activity into the EXCEL file.
+    # The EXCEL file is located in the misc folder.
+    json_data = {}
+    try:
+        cursor.execute('SELECT name FROM users WHERE username=?', (username,))
+        name = cursor.fetchone()[0]
+    except Exception as e:
+        name = username
+    timenow = datetime.datetime.now()
+    timeact = timenow.strftime("%H:%M:%S %d-%m-%Y")
+    if username != "admin": save_to_excel(ip_address, username, name, timeact, action)
+    json_data = {
+        "success": True,
+    }
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')  
+
+def get_stats():
+    # Getting the statistics of the website
+    json_data = {}
+
+    try:
+        # On book types
+        cursor.execute("SELECT COUNT(*) FROM books WHERE use='Sách Tham Khảo'")
+        typecount_thamkhao = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM books WHERE use='Sách Truyện'")
+        typecount_truyen = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM books WHERE use='Sách Giáo Khoa'")
+        typecount_giaokhoa = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM books WHERE use='Sách Bài Tập'")
+        typecount_baitap = cursor.fetchone()[0]
+        json_data = {
+            "success": True,
+            "thamkhao": typecount_thamkhao,
+            "truyen": typecount_truyen,
+            "giaokhoa": typecount_giaokhoa,
+            "baitap": typecount_baitap
+        }
+    except Exception as e:
+        json_data = {
+            "success": False,
+            "error": str(e)
+        }
+
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
+def id_generate(size, allowed_chars : str):
+    return ''.join(random.choice(allowed_chars) for x in range(size)) 
+
+def refresh_db(db):
+    db.close()
+    newdb = sqlite3.connect(f"{db_name}.db")
+    return newdb
+
+# add_book(headers_dict["ID"], headers_dict["Title"], headers_dict["Author"], headers_dict["Year"], headers_dict["Description"], headers_dict["Use"])
+def add_book(idx: str, title: str, author: str, year: int, description: str, use: str, episode: int, body: str):
+
+    json_data = {}
+    try:
+        # Get a clone of books and table for easy access
+        cursor.execute("SELECT * FROM books")
+        books = list(cursor.fetchall())
+
+        # Check if the book already exists
+        if idx in books:
+            json_data = {
+                "success": False,
+                "error": "Book already exists"
+            }
+            return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+        else:
+            # Insert the book into the database
+            data = (idx, title, author, year, description, use)
+
+            # Insert data into the table
+            cursor.execute('''
+                INSERT OR IGNORE INTO books (id, title, author, year, description, use)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', data)
+            db.commit()
+            json_data = {
+                "success": True
+            }
+
+            body_data = base64.b64decode(body)
+            # Insert sample data using current time for `borrow_day` and future time for `borrow_expire`
+            current_time = int(time.time())  # Get current Unix timestamp
+
+            data = (id_generate(11, string.ascii_letters+string.digits), idx, episode, "Nhà Trường", current_time)
+
+            # Insert data into the table
+            cursor.execute('''
+                INSERT OR IGNORE INTO ids (id, type, ep, donor, donateday)
+                VALUES (?, ?, ?, ?, ?)
+            ''', data)
+
+            db.commit()
+            
+            with open("book_thumbnails/" + idx + "_" + str(episode) + ".jpg", "wb") as file:
+                file.write(body_data)
+
+            db = refresh_db(db)
+        
+    except Exception as e:
+        json_data = {
+            "success": False,
+            "error": str(e)
+        }
+
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
+def add_id(idx: str, episode: int, body: str):
+    json_data = {}  # Default empty json_data
+    print(f"Add book with id {idx}, episode {episode}")
+    try:
+        if body == "":
+            # No body detected, check if the episode already exists in the database
+            cursor.execute("SELECT * FROM ids WHERE ep = ?", (episode,))
+            if not cursor.fetchone():
+                # Episode does not exist
+                json_data = {
+                    "success": False,
+                    "error": f"Không có ảnh cho tập {episode}"
+                }
+            else:
+                # Episode exists, insert sample data
+                current_time = int(time.time())  # Get current Unix timestamp
+
+                data = (id_generate(11, string.ascii_letters + string.digits), idx, episode, "Nhà Trường", current_time)
+
+                # Insert data into the table
+                cursor.execute('''
+                    INSERT OR IGNORE INTO ids (id, type, ep, donor, donateday)
+                    VALUES (?, ?, ?, ?, ?)
+                ''', data)
+                
+                json_data = {
+                    "success": True,
+                }
+                db.commit()  # Commit to save the changes
+
+        else:
+            # Body detected, insert data into the table like normal
+            # Episode exists, insert sample data
+            current_time = int(time.time())  # Get current Unix timestamp
+
+            data = (id_generate(11, string.ascii_letters + string.digits), idx, episode, "Nhà Trường", current_time)
+
+            # Insert data into the table
+            cursor.execute('''
+                INSERT OR IGNORE INTO ids (id, type, ep, donor, donateday)
+                VALUES (?, ?, ?, ?, ?)
+            ''', data)
+            
+            json_data = {
+                "success": True,
+            }
+            db.commit()  # Commit to save the changes
+
+            body_data = base64.b64decode(body)
+            with open("book_thumbnails/" + idx + "_" + str(episode) + ".jpg", "wb") as file:
+                file.write(body_data)
+    except Exception as e:
+        json_data = {
+            "success": False,
+            "error": str(e)
+        }
+
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
+def delete_borrow(idx: str):
+    # Deleting borrows from DB
+    try:
+        cursor.execute("DELETE FROM borrows WHERE id=?", (idx,))
+        db.commit()
+        json_data = {
+            "success": True,
+        }
+    except Exception as e:
+        json_data = {
+            "success": False,
+            "error": str(e)
+        }
+
+    return json.dumps(json_data, ensure_ascii=False).encode('utf-8')
+
+def application(environ, start_response):
+    
     # Get the HTTP method (GET or POST)
     method = environ.get('REQUEST_METHOD', 'GET')
 
     # Get the path from the URL
     path = environ.get('PATH_INFO', '/')
 
+    # Get the user's IP address
+    ip_address = environ.get('REMOTE_ADDR', 'Unknown')
+
     # Prepare the response headers
     headers = [('Content-Type', 'text/plain')]
+    
+    # Log the details to the log file
+    LOGFILE = "serverLog.log"
+    with open(LOGFILE, "a") as file:
+        file.write(f"[{ip_address}] --- {method} {path}\n")
     
     # Helper function to extract headers as a string
     def get_headers(environ):
@@ -279,8 +587,8 @@ def application(environ, start_response):
             headers_str = ""
         
         # # Query string parameters
-        # query_params = environ.get('QUERY_STRING', '')
-        # body_str = f'Query string: {query_params}\n' if query_params else ''
+        query_params = environ.get('QUERY_STRING', '')
+        body_str = f'Query string: {query_params}\n' if query_params else ''
         
         # start_response('200 OK', headers)
         # message = 'This is a GET request.\n'
@@ -361,7 +669,27 @@ def application(environ, start_response):
                 # If not all data exists, then we return bad request
                 start_response('400 Bad Request', headers)
                 return [json.dumps({"error": "Missing headers for connection", "headers": headers_dict}).encode('utf-8')]
-
+            
+        elif path == "/journal":
+            # Logging user activity
+            if 'Username' in headers_dict and 'Action' in headers_dict:
+                # If all required params are present, then we log the activity
+                start_response('200 OK', headers)
+                return [b''+log_activity(ip_address, headers_dict["Username"], headers_dict["Action"])]
+            
+        elif path == "/getstats":
+            start_response('200 OK', headers)
+            return [b''+get_stats()]
+        
+        elif path == "/delborrow":
+            # Delete borrowed book from the library through API calls
+            if "Id" in headers_dict:
+                start_response('200 OK', headers)
+                return [b''+delete_borrow(headers_dict["Id"])]
+            else:
+                start_response('400 Bad Request', headers)
+                return [json.dumps({"error": "Missing headers for connection", "headers": headers_dict}).encode('utf-8')]
+        
         else:
             # This is for web access
             file_path = os.path.join(os.getcwd(), path.lstrip('/'))  # Get the file path
@@ -422,6 +750,14 @@ def application(environ, start_response):
 
     # Handle POST request
     elif method == 'POST':
+        # Get headers as a string
+        try:
+            headers_dict = get_headers_dict(environ)
+            headers_str = get_headers(environ)
+        except:
+            print("An error occured in headers variable creation")
+            headers_dict = {}
+            headers_str = ""
         if path == "/facial":
             # Handle facial recognition request
             try:
@@ -448,6 +784,32 @@ def application(environ, start_response):
                     'success': False,
                     'error': str(e)
                 }
+
+        elif path == "/addbook":
+            if 'Id' in headers_dict and 'Title' in headers_dict and 'Author' in headers_dict and 'Year' in headers_dict and 'Description' in headers_dict and 'Use' in headers_dict and 'Episode' in headers_dict:
+                # Read the content length
+                content_length = int(environ.get('CONTENT_LENGTH', 0))
+                
+                # Read the request body as a string
+                body_str = environ['wsgi.input'].read(content_length).decode('utf-8')
+                start_response('200 OK', headers)
+                return [b''+add_book(headers_dict["Id"], headers_dict["Title"], headers_dict["Author"], headers_dict["Year"], headers_dict["Description"], headers_dict["Use"], headers_dict["Episode"], body_str)]
+            elif 'Id' in headers_dict and 'Episode' in headers_dict and headers_dict['Id'] != "" and headers_dict['Episode'] != "":
+                # Read the content length
+                content_length = int(environ.get('CONTENT_LENGTH', 0))
+                start_response('200 OK', headers)
+                if content_length == 0:
+                    body_str = ''
+                    print("No body detected on connection")
+                else:
+                    body_str = environ['wsgi.input'].read(content_length).decode('utf-8')
+                print(headers_dict["Id"], headers_dict["Episode"])
+                return [b''+add_id(headers_dict["Id"], headers_dict["Episode"], body_str)]
+            else:
+                start_response('400 Bad Request', headers)
+                print(headers_dict)
+                return [json.dumps({"error": "Missing headers for connection", "headers": headers_dict}).encode('utf-8')]
+            
         else:
             # Get headers as a string
             headers_str = get_headers(environ)

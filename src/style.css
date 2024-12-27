@@ -816,6 +816,144 @@ a.books_subheader {
     font-size: 20px;
 }
 
+/* INFO PANELS */
+
+.info-panel-container {
+    display: flex;
+    justify-content: center; /* Centers the panels horizontally */
+    gap: 20px; /* Adds spacing between the panels */
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap; /* Ensures panels wrap if there's not enough space */
+}
+
+.info-panel {
+    background: white;
+    box-shadow: 0px 3px 5px #929292;
+    border-radius: 10px;
+    padding: 20px; /* Optional: adds padding inside the panels */
+    text-align: center; /* Centers the content inside the panels */
+    border: 1px solid transparent;
+    transition: .3s ease;
+}
+
+.info-panel:hover {
+    box-shadow: 0px 3px 20px #515151;
+    transform: translateY(-10px);
+    border: 1px solid green;
+}
+
+.feature-panel {
+    background: white;
+    box-shadow: 0px 3px 5px #929292;
+    border-radius: 10px;
+    padding: 20px; /* Optional: adds padding inside the panels */
+    text-align: center; /* Centers the content inside the panels */
+    border: 1px solid transparent;
+    width: 400px;
+    transition: .3s ease;
+}
+
+.feature-panel:hover {
+    box-shadow: 0px 3px 20px #515151;
+    transform: translateY(-10px);
+    border: 1px solid green;
+}
+
+.feature-panel a {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #eee;
+    color: black;
+    text-decoration: none;
+    transition: .2s;
+}
+
+.feature-panel a:hover {
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #28a745;
+    color: white;
+}
+
+.feature-panel a strong {
+    font-size: 20px;
+}
+
+.addbook-container {
+    color: black;
+    justify-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addbook-container input {
+    border: 0;
+    background-color: white;
+    padding: 13px;
+    border-radius: 10px;
+    width: 230px;
+}
+
+.addbook-container textarea {
+    border: 0;
+    background-color: white;
+    padding: 13px;
+    border-radius: 10px;
+    width: 230px;
+}
+
+.addbook-container select {
+    border: 0;
+    background-color: white;
+    padding: 13px;
+    border-radius: 10px;
+    width: 230px;
+}
+
+.addbook-container button {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: black;
+    text-decoration: none;
+    border: 0;
+    transition: .2s;
+}
+
+.addbook-container button:hover {
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #2983ad;
+    color: white;
+    cursor: pointer;
+}
+
+.form-group input[type=button] {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: black;
+    text-decoration: none;
+    border: 0;
+    transition: .2s;
+}
+
+.addbook-container input[type=button]:hover {
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #2983ad;
+    color: white;
+    cursor: pointer;
+}
+
+.form-group {
+    padding: 20px;
+}
+
+/* END OF INFO PANELS */
+
 @media screen and (min-width: 600px) {
     .navbar {
         padding: 1rem 2rem;

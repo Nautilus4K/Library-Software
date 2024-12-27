@@ -47,6 +47,21 @@ function tick() {
         const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
 
         if (qrCode && !scanned) {
+            var username = getCookie("username")
+            if (!username) {
+                username = null
+            }
+            fetch("/journal", {
+                method: "GET",
+                headers: {
+                    "Username": username,
+                    "Action": "Quet ma QR: " + qrCode.data
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+            })
             resultElement.textContent = "Đã tìm thấy mã QR: " + qrCode.data;
             window.location.href = "/idinfo.html?code=" + qrCode.data;
             scanned = true

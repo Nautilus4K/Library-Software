@@ -29,6 +29,21 @@ function deleteAllCookies() {
     });
 }
 
+var username1 = getCookie("username")
+    if (!username1) {
+        username1 = null
+    }
+    fetch("/journal", {
+        method: "GET",
+        headers: {
+            "Username": username1,
+            "Action": "Truy cap trang: " + window.location.href
+        }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        console.log(json);
+    })
 
 const username = getCookie("username")
 const userElement = document.getElementById("user")

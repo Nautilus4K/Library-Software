@@ -18,6 +18,22 @@ function search() {
         return null;
     }
 
+    var username = getCookie("username")
+    if (!username) {
+        username = null
+    }
+    fetch("/journal", {
+        method: "GET",
+        headers: {
+            "Username": username,
+            "Action": "Tim kiem sach: " + searchContent
+        }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        console.log(json);
+    })
+
     fetch("/get", {
         method: "GET",
         headers: {

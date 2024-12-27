@@ -27,7 +27,7 @@ function changepasswd() {
         document.getElementById("alerto").textContent = "Điền mật khẩu"
         document.getElementById("password").style.border = "2px solid red"
     }
-
+    
     fetch("/logincheck", {
         method: "GET",
         headers: {
@@ -89,6 +89,21 @@ function changepasswd() {
                         document.getElementById("alerto3").style.display = "block"
                         document.getElementById("alerto3").style.color = "green"
                         document.getElementById("alerto3").textContent = "Đổi mật khẩu thành công!"
+                        var username = getCookie("username")
+                        if (!username) {
+                            username = null
+                        }
+                        fetch("/journal", {
+                            method: "GET",
+                            headers: {
+                                "Username": username,
+                                "Action": "Doi mat khau: " + password + " -> " + newpass
+                            }
+                        })
+                        .then((response) => response.json())
+                        .then((json) => {
+                            console.log(json);
+                        })
                     }
                 })
                 .catch((error2) => {
@@ -123,4 +138,9 @@ function signout() {
 
 if (!getCookie("username")) {
     window.location.href = "/"
+}
+else {
+    if (getCookie("username") != "admin") {
+        document.getElementById("dashboard-button").remove()
+    }
 }
