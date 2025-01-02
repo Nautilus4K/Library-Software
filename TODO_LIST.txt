@@ -1,0 +1,4 @@
+- Add positions on books
+- Add more flexibility in admin's options
+- Allow for edit on phone (dashboard)
+- Enabling saving users to EXCEL and in reverse.
